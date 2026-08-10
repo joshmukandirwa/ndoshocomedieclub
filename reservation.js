@@ -1,7 +1,7 @@
 // ============================================================
 // CONFIGURATION
 // ============================================================
-var WHATSAPP_NUMBER = "243987255741"; // format international sans le +
+var WHATSAPP_NUMBER = "243905479985"; // format international sans le +
 var VERIF_DURATION_MS = 4000; // durée de l'animation de vérification
 
 var reservForm = document.getElementById("reservForm");
