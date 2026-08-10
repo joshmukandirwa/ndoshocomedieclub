@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Événements</title>
+    <link rel="stylesheet" href="evenements.css" />
+    <link rel="icon" href="./logo/ndoshologo-3.png">
+    <link rel="stylesheet" href="footer.css">
+    <meta name="description"
+        content="Tous les événements du Ndosho Comedie Club à Goma : stand-up, spectacles, festivals, découvertes de talents et ateliers. Ne manquez rien !" />
+    <link rel="canonical" href="https://ndosho-comedie-club.vercel.app/evenements.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ndosho Comedie Club" />
+    <meta property="og:title" content="Événements — Ndosho Comedie Club" />
+    <meta property="og:description"
+        content="Tous les événements du Ndosho Comedie Club à Goma : stand-up, spectacles, festivals, découvertes de talents et ateliers. Ne manquez rien !" />
+    <meta property="og:url" content="https://ndosho-comedie-club.vercel.app/evenements.html" />
+    <meta property="og:image" content="https://ndosho-comedie-club.vercel.app/logo/ndoshologo-3.png" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Événements — Ndosho Comedie Club" />
+    <meta name="twitter:description"
+        content="Tous les événements du Ndosho Comedie Club à Goma : stand-up, spectacles, festivals, découvertes de talents et ateliers. Ne manquez rien !" />
+    <meta name="twitter:image" content="https://ndosho-comedie-club.vercel.app/logo/ndoshologo-3.png" />
+
+</head>
+
+<body>
+
+    <!-- ══ NAVBAR ══════════════════════════════════════════ -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-inner">
+                <div class="logo1">
+                    <img src="./logo/ndoshologo-3.png" alt="Logo" />
+                    <div class="logo-text">
+                        <span>NDOSHO</span>
+                        <p>COMEDIE CLUB</p>
+                    </div>
+                </div>
+                <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <!-- Desktop links -->
+                <ul class="nav-links">
+                    <li><a href="index.html#hero">Accueil</a></li>
+                    <li><a href="apropos.html">À propos</a></li>
+                    <li><a href="humoristes.html">Humoristes</a></li>
+                    <li><a href="evenements.html" class="active">Événements</a></li>
+                    <li><a href="galerie.html">Galerie</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                    <li><a href="partenaires.html">Partenaires</a></li>
+                    <li><a href="temoignages.html">Témoignages</a></li>
+                    <li><a href="reservation.html" class="nav-cta">Réserver</a></li>
+                </ul>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="index.html#hero">Accueil</a>
+                <a href="apropos.html">À propos</a>
+                <a href="humoristes.html">Nos humoristes</a>
+                <a href="evenements.html">Événements</a>
+                <a href="reservation.html">Réserver</a>
+                <a href="galerie.html">Galerie</a>
+                <a href="temoignages.html">Témoignages</a>
+                <a href="contacts.html">Contacts</a>
+                <a href="partenaires.html">Partenaires</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ══ HERO ÉVÉNEMENTS ═══════════════════════════════════ -->
+    <section class="evnt-hero">
+        <span class="label-orange">Notre agenda</span>
+        <h1>Ne manquez rien !</h1>
+        <p>Stand-up, spectacles, festivals, découvertes de talents et ateliers : retrouvez ici tous les rendez-vous du
+            Ndosho Comedie Club.</p>
+    </section>
+
+    <!-- ══ À LA UNE ══════════════════════════════════════════ -->
+    <section class="evnt-featured">
+        <div class="section-header">
+            <span class="label-orange">À la une</span>
+            <h2>Le grand rendez-vous</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="featured-card">
+            <img src="./logo/texte.png" alt="Festival Punguza Stress" class="featured-img" />
+            <div class="featured-body">
+                <span class="label-orange">Festival</span>
+                <h3>Appel à participation - Festival Punguza Stress (2ème Édition) 2027</h3>
+                <!-- <div class="featured-meta">
+                    <span>📅 2027</span>
+                    <span>🕐 18h00</span>
+                    <span>📍 RDCongo — Goma</span>
+                </div> -->
+                <p class="featured-desc">
+                    Le collectif NDOSHO COMÉDIE CLUB lance un appel à candidatures pour la 2è édition du Festival
+                    Punguza Stress. Les humoristes émergents et confirmés résidant à <strong>Goma, Bukavu, Uvira, Beni,
+                        Bunia, Kisangani, au Burundi et au Rwanda</strong> sont invités à participer à cette nouvelle
+                    édition. Pour postuler, les candidats doivent envoyer une vidéo de prestation sur scène d'une durée
+                    maximale de 5 minutes ainsi qu'un
+                    CV artistique avant le <strong>30 octobre 2026 à minuit.</strong>
+                </p>
+                <a href="#" target="_blank" class="btn-orange">En savoir plus</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ FILTRES ═══════════════════════════════════════════
+    <div class="evnt-filters-wrap">
+        <div class="evnt-filters" id="evntFilters">
+            <button class="filter-btn active" data-filter="tous">Tous</button>
+            <button class="filter-btn" data-filter="spectacles">Spectacles</button>
+            <button class="filter-btn" data-filter="evenements">événements</button>
+            <button class="filter-btn" data-filter="festival">Festival</button>
+            <button class="filter-btn" data-filter="decouverte">Découverte</button>
+            <button class="filter-btn" data-filter="atelier">Atelier</button>
+        </div>
+    </div> -->
+
+    <!-- ══ GRILLE COMPLÈTE ═══════════════════════════════════ -->
+    <section class="evnt-full">
+        <div class="section-header">
+            <span class="label-orange">Infos</span>
+            <h2>Tous nos événements</h2>
+            <div class="underline"></div>
+        </div>
+
+        <!-- ══ FILTRES ═══════════════════════════════════════════ -->
+        <div class="evnt-filters-wrap">
+            <div class="evnt-filters" id="evntFilters">
+                <button class="filter-btn active" data-filter="tous">Tous</button>
+                <button class="filter-btn" data-filter="spectacles">Spectacles</button>
+                <button class="filter-btn" data-filter="evenements">événements</button>
+                <button class="filter-btn" data-filter="festival">Festival</button>
+                <button class="filter-btn" data-filter="decouverte">Découverte</button>
+                <button class="filter-btn" data-filter="atelier">Atelier</button>
+            </div>
+        </div>
+        <br>
+        <br>
+
+
+        <div class="evnt-cards-grid" id="evntGrid">
+
+
+            <div class="evnt-card" data-category="spectacles">
+                <div class="img-events">
+                    <img src="./autres identifiant/oneman.jpg">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date"><span class="event-day">28</span><span class="event-month">AOÛT</span></div>
+                    <div><span class="evnt-card-cat">Spectacle</span></div>
+                </div>
+                <div class="evnt-card-body">
+                    <h3>LA KAZA - One Man Show de Raphaël Higgins </h3>
+                    <p>
+                        <strong>LA KAZA</strong> est un one man show de Raphaël Higgins inspiré du quotidien des
+                        habitants de Goma. À travers l'humour et des anecdotes authentiques, le spectacle met en lumière
+                        la <strong>résilience</strong> et l'esprit unique de notre ville. Le premier rodage aura lieu le
+                        28 août 2026 à 14h06 à l'<strong>Université des Martyrs du Congo (UNIM)</strong>, référence :
+                        ancienne prison centrale de Munzenze. Entrée gratuite et libre pour tous les amoureux de la
+                        bonne humeur.
+                        <br>
+                        Découvrez LA KAZA, une pépite qui raconte la force de Goma. Bienvenue chez
+                        vous, Twende KAZA !
+                        <a href="reservation.html" style="text-decoration: underline; color: blue;">Cliquer ici pour
+                            réserver</a>
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="reservation.html" target="_blank">réserver ma place</a>
+                </div> -->
+            </div>
+
+            <div class="evnt-card" data-category="festival">
+                <div class="img-events">
+                    <img src="./autres identifiant/abee.jpg">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date"><span class="event-day">07</span><span class="event-month">AOUT</span></div>
+                    <div><span class="evnt-card-cat">Festival</span></div>
+                </div>
+                <div class="evnt-card-body">
+                    <h3>Invité Félicien Senzoga | UNIGOM ZÉRO STRESS - 2è Édition</h3>
+                    <p>
+                        M. l'Abbé Félicien Senzoga a été l'un des humoristes invités de UNIGOM ZÉRO STRESS, un événement
+                        organisé le 7 août 2026 à 14h14 à l'Université de Goma (UNIGOM). En tant qu'invité spécial, il a
+                        conquis le public grâce à son style unique, son sens de l'humour et son charisme, offrant une
+                        prestation mémorable qui a largement contribué au succès de cette édition.
+
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="#" target="_blank">En savoir plus</a>
+                </div> -->
+            </div>
+
+            <div class="evnt-card" data-category="decouverte">
+                <div class="img-events">
+                    <img src="./autres identifiant/soon.png">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date1"><span class="event-day">Coming</span><span class="event-month">Soon</span>
+                    </div>
+                    <div><span class="evnt-card-cat evnt-card-cat-standalone">Decouverte</span></div>
+                </div>
+                <div class="evnt-card-body evnt-card-body-nodate">
+                    <!-- <span class="evnt-card-cat evnt-card-cat-standalone">Decouverte</span> -->
+                    <h3>Festival Punguza Stress - 2ème Édition</h3>
+                    <p>
+                        Festival Punguza Stress - 2ème Édition revient après le succès de sa première édition, qui a
+                        rassemblé le public autour de moments de rire, de détente et de convivialité. Cette nouvelle
+                        édition promet une programmation encore plus riche, avec des artistes talentueux, des surprises
+                        inédites et une ambiance exceptionnelle. Si vous avez manqué la première édition, c'est le
+                        moment de vous préparer. Restez connectés pour découvrir prochainement la date, le lieu et
+                        toutes les informations relatives à cet événement incontournable. Kuwa tayari !
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="#" target="_blank">Decouvrir</a>
+                </div> -->
+            </div>
+
+            <div class="evnt-card" data-category="evenements">
+                <div class="img-events">
+                    <img src="./recommandé/honneur.jpg">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date"><span class="event-day">14</span><span class="event-month">JUILL</span>
+                    </div>
+                    <div><span class="evnt-card-cat">événements</span></div>
+                </div>
+                <div class="evnt-card-body">
+                    <h3>Une collaboration porteuse d'avenir</h3>
+                    <p>
+                        Nous avons eu l'honneur de recevoir l'organisation <strong>Ecoutemoi</strong> dans le cadre de
+                        son partenariat avec le collectif Ndosho Comédie Club autour du projet Festival Punguza Stress.
+                        Cette rencontre a renforcé notre engagement
+                        dans la promotion des talents humoristiques locaux. Nos sincères remerciements à The Congo Tree
+                        pour son accompagnement et son soutien. Faisons partie de l'histoire.
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="#" target="_blank">Lire la suite</a>
+                </div> -->
+            </div>
+
+            <div class="evnt-card" data-category="evenements">
+                <div class="img-events">
+                    <img src="./recommandé/annonce.jpg">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date"><span class="event-day">19</span><span class="event-month">JUILL</span>
+                    </div>
+                    <div><span class="evnt-card-cat">événements</span></div>
+                </div>
+                <div class="evnt-card-body">
+                    <h3>Une experience enrichissante</h3>
+                    <p>Ce fut une très belle expérience aux côtés d'autres jeunes. Nous remercions chaleureusement les
+                        facilitateurs pour les connaissances et les précieux enseignements qu'ils nous ont transmis sur
+                        les différentes questions liées à la jeunesse.
+                        Avec The Congo Tree, continuons à bâtir l'avenir ensemble. Faisons partie de l'histoire
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="#" target="_blank">Lire la suite</a>
+                </div> -->
+            </div>
+
+            <div class="evnt-card" data-category="festival">
+                <div class="img-events">
+                    <img src="./recommandé/festival.jpg">
+                </div>
+                <div class="evnt-card-top">
+                    <div class="event-date"><span class="event-day">26</span><span class="event-month">AVRIL</span>
+                    </div>
+                    <div><span class="evnt-card-cat">Festival</span></div>
+                </div>
+                <div class="evnt-card-body">
+                    <h3>Festival Punguza Stress — 1ère Édition</h3>
+                    <p>
+                        La première édition du Festival Punguza Stress, organisée le 26 avril 2026 par le collectif
+                        Ndosho Comédie Club, a marqué le début d'une aventure culturelle dédiée à la promotion de
+                        lhumour et des talents locaux. Entre spectacles, rencontres et moments
+                        de partage, cet événement a offert au public une expérience inoubliable placée sous le signe de
+                        la détente et de la convivialité.
+                    </p>
+                </div>
+                <!-- <div class="evnt-card-foot">
+                    <a href="#" target="_blank">Revivre l'événement</a>
+                </div> -->
+            </div>
+        </div>
+        <p class="evnt-empty" id="evntEmpty">Aucun événement dans cette catégorie pour le moment.</p>
+    </section>
+
+    <!-- ══ NEWSLETTER ════════════════════════════════════════ -->
+    <section class="evnt-newsletter">
+        <div class="section-header">
+            <span class="label-orange">Restez informé</span>
+            <h2 style="color: #faf3d9;">Aucun événement raté !</h2>
+            <div class="underline"></div>
+            <p>Recevez nos prochains événements directement dans votre boîte mail.</p>
+        </div>
+        <form class="formulaire" id="evntSubscribeForm">
+            <input type="email" placeholder="Votre adresse email" required />
+            <button type="submit">S'abonner</button>
+        </form>
+    </section>
+
+    <!-- ══ FOOTER ════════════════════════════════════════════ -->
+    <footer>
+        <div class="foot-inner">
+
+            <div class="foot-brand">
+                <div class="foot-logo">
+                    <img src="./logo/ndoshologo-3.png" alt="Logo" />
+                    <div>
+                        <p class="foot-logo-name"><span>NDOSHO</span><br>COMEDIE CLUB</p>
+                        <!-- <p class="foot-logo-sub">L'univers de l'humour</p> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="foot-nav">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html#hero">Accueil</a></li>
+                    <li><a href="apropos.html">À propos</a></li>
+                    <li><a href="humoristes.html">Humoristes</a></li>
+                    <li><a href="evenements.html">Événements</a></li>
+                    <li><a href="temoignages.html">Témoignages</a></li>
+                    <li><a href="partenaires.html">Partenaires</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                    <li><a href="reservation.html">Réserver</a></li>
+                </ul>
+            </div>
+
+            <div class="foot-social">
+                <h4>Nous suivre</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61562878783027" aria-label="Facebook">
+                        <img src="./footer/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="https://www.instagram.com/ndosho.comedie.club?igsh=bWFrZjBhbmVvdXdj"
+                        aria-label="Instagram">
+                        <img src="./footer/insta.png" alt="Instagram" />
+                    </a>
+                    <a href="https://youtube.com/@ndoshocomedieclub-d7q?si=2iqwbvFVvwWncgmg" aria-label="YouTube">
+                        <img src="./icons/YouTube (1).png" alt="YouTube" />
+                    </a>
+                    <a href="https://www.tiktok.com/@ndosho.comedie.cl?_r=1&_t=ZS-98hxGnycjI7" aria-label="TikTok">
+                        <img src="./icons/tok.png" alt="TikTok" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="foot-contact">
+                <h4>Nous contacter</h4>
+                <div class="adress"><img src="./footer/phone.png" alt="Tel" />
+                    <p>+243 905 479 985</p>
+                </div>
+                <div class="adress"><img src="./footer/mail.png" alt="Mail" />
+                    <p>ndoshocomedieclub01@gmail.com</p>
+                </div>
+                <div class="adress"><img src="./footer/localisation.png" alt="Lieu" />
+                    <p>Quartier Himbi, Goma, Nord-Kivu, RDC</p>
+                </div>
+            </div>
+        </div>
+        <div class="login">
+            <p>&copy; 2026 NDOSHO COMEDIE CLUB | Tous droits réservés</p>
+            <p>Conçu par <a href="#" target="_blank">EbenJosh Tech & services</a></p>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">&#8679;</button>
+
+    <script src="index.js"></script>
+    <script>
+        // ---------- Filtres d'événements ----------
+        var filtersWrap = document.getElementById('evntFilters');
+        var cards = document.querySelectorAll('#evntGrid .evnt-card');
+        var emptyMsg = document.getElementById('evntEmpty');
+
+        if (filtersWrap) {
+            filtersWrap.addEventListener('click', function (e) {
+                var btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+
+                var current = filtersWrap.querySelector('.filter-btn.active');
+                if (current) current.classList.remove('active');
+                btn.classList.add('active');
+
+                var filter = btn.getAttribute('data-filter');
+                var visibleCount = 0;
+
+                cards.forEach(function (card) {
+                    var match = filter === 'tous' || card.getAttribute('data-category') === filter;
+                    card.style.display = match ? '' : 'none';
+                    if (match) visibleCount++;
+                });
+
+                emptyMsg.classList.toggle('show', visibleCount === 0);
+            });
+        }
+
+        // ---------- Newsletter événements ----------
+        var evntSubscribeForm = document.getElementById('evntSubscribeForm');
+        if (evntSubscribeForm) {
+            evntSubscribeForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var input = evntSubscribeForm.querySelector('input[type="email"]');
+                var email = input.value.trim();
+                if (!email) return;
+
+                var existingMsg = evntSubscribeForm.querySelector('.form-msg');
+                if (existingMsg) existingMsg.remove();
+
+                var msg = document.createElement('p');
+                msg.className = 'form-msg';
+                msg.textContent = 'Merci ! On vous tient au courant à ' + email;
+                evntSubscribeForm.appendChild(msg);
+
+                evntSubscribeForm.reset();
+            });
+        }
+    </script>
+</body>
+
+</html>

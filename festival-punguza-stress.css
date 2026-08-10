@@ -1,0 +1,124 @@
+:root {
+    --navy: #1b3a7a;
+    --navy-dark: #14295c;
+    --orange: #f24822;
+    --cream: #faf3d9;
+    --black: #1a1a1a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--black);
+}
+
+.label-orange {
+    display: inline-block;
+    color: var(--orange);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+}
+
+.underline {
+    width: 60px;
+    height: 3px;
+    background: var(--orange);
+    margin: 10px auto 0;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    margin-top: 6px;
+}
+
+/* ── HERO ── */
+
+.fest-hero {
+    background: var(--navy);
+    color: var(--cream);
+    text-align: center;
+    padding: 90px 24px 60px;
+}
+
+.fest-hero h1 {
+    font-size: 2.4rem;
+    margin: 12px 0;
+}
+
+.fest-hero p {
+    max-width: 520px;
+    margin: 0 auto;
+    color: rgba(250, 243, 217, 0.8);
+}
+
+/* ── GRILLE ARTISTES ── */
+
+/* .fest-artists-section {
+    padding: 70px 24px;
+} */
+
+.fest-artists-section .section-header p {
+    color: rgba(26, 26, 26, 0.6);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.fest-artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.fest-artist-card {
+    background: #fff;
+    border: 1px solid rgba(27, 58, 122, 0.12);
+    /* padding: 24px 12px; */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ── CTA ── */
+
+.cta-banner {
+    background: var(--orange);
+    color: var(--cream);
+    text-align: center;
+    padding: 50px 24px;
+}
+
+.cta-banner p {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.btn-orange {
+    display: inline-block;
+    background: var(--black);
+    color: var(--cream);
+    padding: 14px 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 14px;
+}

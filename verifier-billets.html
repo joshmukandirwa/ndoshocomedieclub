@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vérificateur de billets — Ndosho Comedie Club</title>
+    <link rel="stylesheet" href="reservation.css" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+
+<body>
+    <main class="verif-page">
+        <div class="verif-header">
+            <span class="label-orange">Contrôle d'accès</span>
+            <h1>Vérificateur de billets</h1>
+            <p>Scannez le QR code d'un billet pour vérifier instantanément s'il a bien été généré par le Ndosho Comedie
+                Club.</p>
+        </div>
+
+        <div class="verif-modes">
+            <button class="verif-mode-btn active" id="modeCamBtn" type="button">Caméra</button>
+            <button class="verif-mode-btn" id="modeUploadBtn" type="button">Importer une image</button>
+        </div>
+
+        <div class="verif-scanner show" id="verifScanner">
+            <video id="verifVideo" playsinline muted></video>
+            <div class="verif-scan-frame"></div>
+            <div class="verif-scan-line"></div>
+        </div>
+
+        <div class="verif-upload" id="verifUpload">
+            <p>Importez une capture d'écran ou une photo du QR code du billet.</p>
+            <label for="verifFileInput">Choisir une image</label>
+            <input type="file" id="verifFileInput" accept="image/*" />
+        </div>
+
+        <p class="verif-status" id="verifStatus">Démarrage de la caméra…</p>
+
+        <div class="verif-result" id="verifResult">
+            <div class="verif-icon-wrap" id="verifIconWrap"></div>
+            <h2 id="verifResultTitle">—</h2>
+            <p class="verif-result-msg" id="verifResultMsg">—</p>
+            <div class="verif-details" id="verifDetails"></div>
+            <button class="verif-reset-btn" id="verifResetBtn" type="button">Scanner un autre billet</button>
+        </div>
+
+        <canvas id="verifCanvas" style="display:none;"></canvas>
+    </main>
+
+    <script>
+        // ============================================================
+        // DOIT rester EXACTEMENT identique à TICKET_SECRET dans
+        // admin-billets.html. C'est cette clé partagée (jamais envoyée
+        // nulle part) qui permet de savoir si un billet a vraiment été
+        // signé par notre générateur, ou s'il a été fabriqué/modifié
+        // à la main. Si tu changes l'une, change l'autre.
+        // ============================================================
+        var TICKET_SECRET = 'NDOSHO-2026-CLE-SECRETE-BILLETS';
+
+        var scanner = document.getElementById('verifScanner');
+        var upload = document.getElementById('verifUpload');
+        var modeCamBtn = document.getElementById('modeCamBtn');
+        var modeUploadBtn = document.getElementById('modeUploadBtn');
+        var video = document.getElementById('verifVideo');
+        var canvas = document.getElementById('verifCanvas');
+        var ctx = canvas.getContext('2d');
+        var statusEl = document.getElementById('verifStatus');
+        var resultEl = document.getElementById('verifResult');
+        var iconWrap = document.getElementById('verifIconWrap');
+        var titleEl = document.getElementById('verifResultTitle');
+        var msgEl = document.getElementById('verifResultMsg');
+        var detailsEl = document.getElementById('verifDetails');
+        var resetBtn = document.getElementById('verifResetBtn');
+        var fileInput = document.getElementById('verifFileInput');
+
+        var stream = null;
+        var scanning = false;
+
+        var CHECK_ICON = '<svg viewBox="0 0 52 52" width="84" height="84">' +
+            '<circle class="verif-check-circle" cx="26" cy="26" r="24"/>' +
+            '<path class="verif-check-mark" d="M14 27l7 7 16-16"/>' +
+            '</svg>';
+
+        var X_ICON = '<svg viewBox="0 0 52 52" width="84" height="84">' +
+            '<circle class="verif-x-circle" cx="26" cy="26" r="24"/>' +
+            '<path class="verif-x-mark" d="M17 17l18 18"/>' +
+            '<path class="verif-x-mark" d="M35 17l-18 18"/>' +
+            '</svg>';
+
+        // ---------- Changement de mode (caméra / import) ----------
+        function setMode(mode) {
+            stopCamera();
+            resultEl.classList.remove('show', 'valid', 'invalid');
+            detailsEl.innerHTML = '';
+            if (mode === 'camera') {
+                modeCamBtn.classList.add('active');
+                modeUploadBtn.classList.remove('active');
+                scanner.classList.add('show');
+                upload.classList.remove('show');
+                statusEl.textContent = 'Démarrage de la caméra…';
+                startCamera();
+            } else {
+                modeUploadBtn.classList.add('active');
+                modeCamBtn.classList.remove('active');
+                upload.classList.add('show');
+                scanner.classList.remove('show');
+                statusEl.textContent = 'En attente d\'une image…';
+            }
+        }
+
+        modeCamBtn.addEventListener('click', function () {
+            setMode('camera');
+        });
+        modeUploadBtn.addEventListener('click', function () {
+            setMode('upload');
+        });
+
+        // ---------- Scan via la caméra ----------
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment'
+                    }
+                });
+                video.srcObject = stream;
+                await video.play();
+                scanning = true;
+                statusEl.textContent = 'Recherche d\'un QR code…';
+                requestAnimationFrame(tick);
+            } catch (err) {
+                statusEl.textContent = 'Caméra indisponible sur cet appareil — utilisez plutôt l\'import d\'image.';
+                setMode('upload');
+            }
+        }
+
+        function stopCamera() {
+            scanning = false;
+            if (stream) {
+                stream.getTracks().forEach(function (t) {
+                    t.stop();
+                });
+                stream = null;
+            }
+        }
+
+        function tick() {
+            if (!scanning) return;
+            if (typeof jsQR === 'undefined') {
+                statusEl.textContent = 'Erreur : la librairie de lecture QR n\'a pas pu charger. Vérifiez votre connexion internet et rechargez la page.';
+                stopCamera();
+                return;
+            }
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                var code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code && code.data) {
+                    stopCamera();
+                    handleScannedText(code.data);
+                    return;
+                }
+            }
+            requestAnimationFrame(tick);
+        }
+
+        // ---------- Scan via une image importée ----------
+        fileInput.addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            if (typeof jsQR === 'undefined') {
+                showInvalid('La librairie de lecture QR n\'a pas pu charger. Vérifiez votre connexion internet et rechargez la page.', null);
+                return;
+            }
+            statusEl.textContent = 'Lecture de l\'image…';
+            var img = new Image();
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                var code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code && code.data) {
+                    handleScannedText(code.data);
+                } else {
+                    showInvalid('Aucun QR code détecté dans cette image.', null);
+                }
+            };
+            img.onerror = function () {
+                showInvalid('Impossible de lire cette image.', null);
+            };
+            img.src = URL.createObjectURL(file);
+        });
+
+        // ---------- Lecture du contenu du QR ----------
+        function parseTicketText(text) {
+            var lines = text.split('\n');
+            var data = {};
+            lines.forEach(function (line) {
+                var idx = line.indexOf(':');
+                if (idx === -1) return;
+                var key = line.slice(0, idx).trim();
+                var val = line.slice(idx + 1).trim();
+                if (key === 'ID') data.ticketId = val;
+                else if (key === 'Nom') data.nom = val;
+                else if (key === 'Téléphone') data.tel = val;
+                else if (key === 'Événement') data.eventName = val;
+                else if (key === 'Date') data.eventDate = val;
+                else if (key === 'Lieu') data.eventLieu = val;
+                else if (key === 'Montant payé') data.montant = val;
+                else if (key === 'Émis le') data.emissionDate = val;
+                else if (key === 'SIG') data.sig = val;
+            });
+            return data;
+        }
+
+        // ---------- Recalcul de la signature (même recette que admin-billets.html) ----------
+        async function computeSignature(d) {
+            var base = [d.ticketId, d.nom, d.tel, d.eventName, d.eventDate, d.eventLieu, d.montant, d.emissionDate, TICKET_SECRET].join('|');
+            var enc = new TextEncoder().encode(base);
+            var hashBuf = await crypto.subtle.digest('SHA-256', enc);
+            var hex = Array.from(new Uint8Array(hashBuf)).map(function (b) {
+                return b.toString(16).padStart(2, '0');
+            }).join('');
+            return hex.slice(0, 24).toUpperCase();
+        }
+
+        async function handleScannedText(text) {
+            var data = parseTicketText(text);
+            if (!data.ticketId || !data.nom || !data.sig) {
+                showInvalid('Ce QR code ne correspond pas à un billet Ndosho Comedie Club.', null);
+                return;
+            }
+            statusEl.textContent = 'Vérification…';
+            try {
+                var expected = await computeSignature(data);
+                if (expected === data.sig.toUpperCase()) {
+                    showValid(data);
+                } else {
+                    showInvalid('Signature invalide : ce billet est un faux ou a été modifié.', data);
+                }
+            } catch (err) {
+                showInvalid('Erreur de vérification. Réessayez.', null);
+            }
+        }
+
+        // ---------- Affichage du résultat ----------
+        function fillDetails(d) {
+            detailsEl.innerHTML = '';
+            var rows = [
+                ['Nom', d.nom],
+                ['Événement', d.eventName],
+                ['Date', d.eventDate],
+                ['Lieu', d.eventLieu],
+                ['Montant', d.montant],
+                ['ID billet', d.ticketId]
+            ];
+            rows.forEach(function (r) {
+                if (!r[1]) return;
+                var row = document.createElement('div');
+                row.className = 'verif-detail-row';
+                row.innerHTML = '<span>' + r[0] + '</span><span></span>';
+                row.lastElementChild.textContent = r[1];
+                detailsEl.appendChild(row);
+            });
+        }
+
+        function showValid(d) {
+            statusEl.textContent = '';
+            iconWrap.innerHTML = CHECK_ICON;
+            titleEl.textContent = 'BILLET VALIDE';
+            msgEl.textContent = 'Ce billet a bien été généré par le Ndosho Comedie Club. Entrée autorisée.';
+            fillDetails(d);
+            resultEl.classList.remove('invalid');
+            resultEl.classList.add('show', 'valid');
+            launchConfetti();
+        }
+
+        function showInvalid(message, d) {
+            statusEl.textContent = '';
+            iconWrap.innerHTML = X_ICON;
+            titleEl.textContent = 'BILLET INVALIDE';
+            msgEl.textContent = message;
+            if (d) {
+                fillDetails(d);
+            } else {
+                detailsEl.innerHTML = '';
+            }
+            resultEl.classList.remove('valid');
+            resultEl.classList.add('show', 'invalid');
+        }
+
+        function launchConfetti() {
+            var colors = ['#f24822', '#1b3a7a', '#faf3d9', '#2ecc71'];
+            for (var i = 0; i < 26; i++) {
+                var piece = document.createElement('div');
+                piece.className = 'verif-confetti';
+                piece.style.left = (Math.random() * 100) + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = (Math.random() * 0.3) + 's';
+                piece.style.animationDuration = (0.9 + Math.random() * 0.6) + 's';
+                resultEl.appendChild(piece);
+                (function (p) {
+                    setTimeout(function () {
+                        p.remove();
+                    }, 1800);
+                })(piece);
+            }
+        }
+
+        // ---------- Nouveau scan ----------
+        resetBtn.addEventListener('click', function () {
+            var currentMode = modeCamBtn.classList.contains('active') ? 'camera' : 'upload';
+            setMode(currentMode);
+        });
+
+        setMode('camera');
+    </script>
+</body>
+
+</html>

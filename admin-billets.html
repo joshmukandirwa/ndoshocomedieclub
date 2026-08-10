@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        // Force TOUJOURS l'affichage "version ordinateur" (2 colonnes),
+        // que l'utilisateur ait coché ou non "Version ordinateur" dans Chrome.
+        (function () {
+            var vp = document.querySelector('meta[name="viewport"]');
+            if (vp) {
+                vp.setAttribute('content', 'width=1200');
+            }
+        })();
+    </script>
+    <title>Générateur de billets</title>
+    <link rel="stylesheet" href="reservation.css" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="./logo/ndoshologo-3.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ══ ACCÈS ADMIN ═══════════════════════════════════════ -->
+    <div class="admin-gate" id="adminGate">
+        <div class="admin-gate-box">
+            <h2>Espace administrateur</h2>
+            <input type="password" id="adminPass" placeholder="Mot de passe" />
+            <p class="admin-gate-error" id="adminError">Mot de passe incorrect.</p>
+            <button id="adminUnlockBtn">Accéder</button>
+        </div>
+    </div>
+
+    <!-- ══ PANNEAU ADMIN ═════════════════════════════════════ -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-wrap">
+            <div class="section-header" style="margin-bottom: 30px;">
+                <span class="label-orange">Back-office</span>
+                <h2 style="color: var(--navy);">Générateur de billets</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="admin-grid">
+                <!-- ---------- Formulaire ---------- -->
+                <div class="admin-form-box">
+                    <h2>Informations du billet</h2>
+                    <form class="admin-form" id="ticketForm">
+                        <div>
+                            <label for="tkNom">Nom complet</label>
+                            <input type="text" id="tkNom" placeholder="Ex : Amani Jean" required />
+                        </div>
+                        <div>
+                            <label for="tkTel">Téléphone (pour WhatsApp)</label>
+                            <input type="tel" id="tkTel" placeholder="Ex : 987 654 321" required />
+                        </div>
+                        <div>
+                            <label for="tkEvent">Événement</label>
+                            <select id="tkEvent" required>
+                                <option value="">Choisissez un événement</option>
+                                <option value="La KAZA - One Man Show|28 Août 2026|Université des Martyrs du Congo">LA
+                                    KAZA - One Man Show — 28 Août 2026</option>
+                                <!-- <option value="Découverte Talents|09 Août 2026|Ndosho Comedie Club — Goma">Découverte Talents — 09 Août 2026</option>
+                  <option value="Festival Punguza Stress|15 Août 2026|Institut Français — Goma">Festival Punguza Stress — 15 Août 2026</option>
+                  <option value="Atelier d'écriture comique|23 Août 2026|Ndosho Comedie Club — Goma">Atelier d'écriture comique — 23 Août 2026</option>
+                  <option value="Rire en Liberté|06 Septembre 2026|Institut Français — Goma">Rire en Liberté — 06 Septembre 2026</option>
+                  <option value="Battle d'Improvisation|20 Septembre 2026|Salle la Joie — Goma">Battle d'Improvisation — 20 Septembre 2026</option>
+                  <option value="Soirée Stand-up Goma|04 Octobre 2026|Salle la Joie — Goma">Soirée Stand-up Goma — 04 Octobre 2026</option> -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="tkMontant">Montant payé</label>
+                            <input type="text" id="tkMontant" placeholder="Ex : 1$" required />
+                        </div>
+                        <button type="submit">Générer le billet</button>
+                    </form>
+                </div>
+
+                <!-- ---------- Aperçu du billet ---------- -->
+                <div class="ticket-preview-box">
+                    <p class="ticket-placeholder" id="ticketPlaceholder">
+                        Remplis le formulaire à gauche puis clique sur « Générer le billet » pour voir l'aperçu ici.
+                    </p>
+
+                    <div class="ticket-card" id="ticketCard">
+                        <div class="ticket-main">
+                            <div class="ticket-head-row">
+                                <div class="ticket-brand-block">
+                                    <span class="ticket-brand-line">NDOSHO</span>
+                                    <span class="ticket-brand-line">COMEDIE</span>
+                                    <span class="ticket-brand-line accent">CLUB</span>
+                                </div>
+                                <div class="ticket-meta-block">
+                                    <span class="ticket-tag" id="tkOutEvent">Billet</span>
+                                    <span class="ticket-meta-date" id="tkOutDate">—</span>
+                                    <span class="ticket-meta-lieu" id="tkOutLieu">—</span>
+                                </div>
+                            </div>
+                            <div class="ticket-boxes">
+                                <div class="ticket-box">
+                                    <span class="box-label">Nom</span>
+                                    <span class="box-value" id="tkOutNom">—</span>
+                                </div>
+                                <div class="ticket-box">
+                                    <span class="box-label">Téléphone</span>
+                                    <span class="box-value" id="tkOutTel">—</span>
+                                </div>
+                            </div>
+                            <div class="ticket-boxes">
+                                <div class="ticket-box">
+                                    <span class="box-label">Montant</span>
+                                    <span class="box-value" id="tkOutMontant">—</span>
+                                </div>
+                                <div class="ticket-box">
+                                    <span class="box-label">ID billet</span>
+                                    <span class="box-value" id="tkOutId">—</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ticket-side">
+                            <span class="ticket-admit">ENTRÉE</span>
+                            <div class="ticket-qr" id="tkQr">
+                                <img id="tkQrImg" src="" alt="QR code du billet" width="128" height="128" />
+                            </div>
+                            <span class="ticket-side-id" id="tkOutIdSide">—</span>
+                        </div>
+                        <div class="ticket-foot">
+                            <p>Ce billet est unique et nominatif. Toute duplication ou revente est interdite et annule
+                                sa validité. Présentez-le (numérique ou imprimé) à l'entrée.</p>
+                        </div>
+                    </div>
+
+                    <div class="ticket-actions" id="ticketActions" style="display: none;">
+                        <button class="btn-download" id="downloadBtn">Télécharger (PNG)</button>
+                        <button class="btn-download" id="copyLinkBtn">Copier le lien</button>
+                        <button class="btn-whatsapp" id="waSendBtn">Envoyer sur WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admi-billets.js"></script>
+</body>
+
+</html>
