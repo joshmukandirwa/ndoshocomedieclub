@@ -6,7 +6,6 @@
 // ci-dessous, avec la MÊME clé que le slug généré côté site (voir fonction
 // slugify() dans evenements.html — même titre = même slug).
 
-
 const SITE = "https://ndosho-comedie-club.vercel.app";
 
 const EVENTS = {
@@ -63,6 +62,11 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+function buildImageUrl(imagePath) {
+  var encodedPath = imagePath.split("/").map(encodeURIComponent).join("/");
+  return SITE + "/" + encodedPath;
+}
+
 module.exports = (req, res) => {
   var id = req.query && req.query.id ? String(req.query.id) : "";
   var event = EVENTS[id];
@@ -76,7 +80,8 @@ module.exports = (req, res) => {
     return;
   }
 
-  var imageUrl = encodeURI(SITE + "/" + event.image);
+  var imageUrl = buildImageUrl(event.image);
+  var imageType = /\.png$/i.test(event.image) ? "image/png" : "image/jpeg";
   var pageUrl = SITE + "/api/evenement?id=" + encodeURIComponent(id);
 
   var html =
@@ -100,6 +105,14 @@ module.exports = (req, res) => {
     '<meta property="og:image" content="' +
     imageUrl +
     '" />' +
+    '<meta property="og:image:secure_url" content="' +
+    imageUrl +
+    '" />' +
+    '<meta property="og:image:type" content="' +
+    imageType +
+    '" />' +
+    '<meta property="og:image:width" content="1200" />' +
+    '<meta property="og:image:height" content="630" />' +
     '<meta property="og:url" content="' +
     pageUrl +
     '" />' +
