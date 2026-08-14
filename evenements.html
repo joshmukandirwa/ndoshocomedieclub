@@ -103,7 +103,7 @@
                     maximale de 5 minutes ainsi qu'un
                     CV artistique avant le <strong>30 octobre 2026 à minuit.</strong>
                 </p>
-                <a href="#" target="_blank" class="btn-orange">En savoir plus</a>
+                <a href="#" class="btn-orange" id="festivalCta">En savoir plus</a>
             </div>
         </div>
     </section>
@@ -377,59 +377,20 @@
         </div>
     </footer>
 
+    <!-- ══ OVERLAY ENVOI WHATSAPP ═══════════════════════════ -->
+    <div class="wa-overlay" id="waOverlay">
+        <div class="wa-overlay-box">
+            <div class="wa-spinner" id="waSpinner"></div>
+            <div class="wa-check" id="waCheck">&#10003;</div>
+            <p class="wa-overlay-text" id="waOverlayText">Envoi en cours...</p>
+        </div>
+    </div>
+
     <!-- Scroll to top -->
     <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">&#8679;</button>
 
     <script src="index.js"></script>
-    <script>
-        // ---------- Filtres d'événements ----------
-        var filtersWrap = document.getElementById('evntFilters');
-        var cards = document.querySelectorAll('#evntGrid .evnt-card');
-        var emptyMsg = document.getElementById('evntEmpty');
-
-        if (filtersWrap) {
-            filtersWrap.addEventListener('click', function (e) {
-                var btn = e.target.closest('.filter-btn');
-                if (!btn) return;
-
-                var current = filtersWrap.querySelector('.filter-btn.active');
-                if (current) current.classList.remove('active');
-                btn.classList.add('active');
-
-                var filter = btn.getAttribute('data-filter');
-                var visibleCount = 0;
-
-                cards.forEach(function (card) {
-                    var match = filter === 'tous' || card.getAttribute('data-category') === filter;
-                    card.style.display = match ? '' : 'none';
-                    if (match) visibleCount++;
-                });
-
-                emptyMsg.classList.toggle('show', visibleCount === 0);
-            });
-        }
-
-        // ---------- Newsletter événements ----------
-        var evntSubscribeForm = document.getElementById('evntSubscribeForm');
-        if (evntSubscribeForm) {
-            evntSubscribeForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                var input = evntSubscribeForm.querySelector('input[type="email"]');
-                var email = input.value.trim();
-                if (!email) return;
-
-                var existingMsg = evntSubscribeForm.querySelector('.form-msg');
-                if (existingMsg) existingMsg.remove();
-
-                var msg = document.createElement('p');
-                msg.className = 'form-msg';
-                msg.textContent = 'Merci ! On vous tient au courant à ' + email;
-                evntSubscribeForm.appendChild(msg);
-
-                evntSubscribeForm.reset();
-            });
-        }
-    </script>
+    <script src="evenements.js"></script>
 </body>
 
 </html>
