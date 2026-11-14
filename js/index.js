@@ -135,12 +135,8 @@ document.addEventListener('DOMContentLoaded', function () {
     buildDots();
   }
 
-  initSlider(
-    document.getElementById('temoigSlider'),
-    document.getElementById('temoigPrev'),
-    document.getElementById('temoigNext'),
-    document.getElementById('temoigDots')
-  );
+  window.initNdoshoSlider = initSlider;
+
 
   // ---------- Barre de navigation : ombre quand on descend ----------
   var siteHeader = document.querySelector('header');
@@ -196,6 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     requestAnimationFrame(tick);
   }
+
+  window.ndoshoAutoLoop = autoLoop;
 
   autoLoop(document.querySelector('.galerie-grid'), 0.6);
   autoLoop(document.getElementById('humorRow'), 0.5);

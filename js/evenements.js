@@ -83,7 +83,7 @@ shareableCards.forEach(function (card) {
     var url = window.location.origin + "/api/evenement?id=" + slug;
     if (canNativeShare) {
       navigator
-        .share({ title: titleEl.textContent.trim(), text: titleEl.textContent.trim() + " — Ndosho Comédie Club", url: url })
+        .share({ url: url })
         .catch(function (err) {
           // Annulation par l'utilisateur : rien à faire. Autre erreur : on copie le lien.
           if (err && err.name !== "AbortError") copyToClipboard(url);

@@ -1,0 +1,74 @@
+rules_version = '2';
+// ============================================================
+// RÈGLES DE SÉCURITÉ FIRESTORE — Ndosho Comédie Club
+// À coller dans Firebase Console > Firestore > Règles > Publier.
+//
+// Principe :
+//  - le public peut ENVOYER (messages, témoignages) mais jamais lire
+//    ce qui a été envoyé ;
+//  - le public peut LIRE uniquement ce qui est publié (actualités
+//    publiées, témoignages approuvés) ;
+//  - seul le compte admin (son email, dans isAdmin) peut
+//    tout lire / modifier / supprimer ;
+//  - le public peut seulement ajouter +1 au compteur de vues.
+// ============================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['ndosho.comedie.club.cto@gmail.com'];
+    }
+    function txt(v, min, max) {
+      return v is string && v.size() >= min && v.size() <= max;
+    }
+
+    // Messages du formulaire de contact (privés)
+    match /messages/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nom','tel','email','objet','message','lu','createdAt'])
+        && txt(request.resource.data.nom, 2, 80)
+        && txt(request.resource.data.tel, 5, 30)
+        && txt(request.resource.data.email, 5, 120)
+        && txt(request.resource.data.objet, 2, 80)
+        && txt(request.resource.data.message, 5, 3000)
+        && request.resource.data.lu == false
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Témoignages reçus (privés, avec téléphone) — en attente de validation
+    match /temoignages/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nom','tel','note','message','photo','statut','createdAt'])
+        && txt(request.resource.data.nom, 2, 80)
+        && txt(request.resource.data.tel, 5, 30)
+        && request.resource.data.note is int
+        && request.resource.data.note >= 1 && request.resource.data.note <= 5
+        && txt(request.resource.data.message, 10, 1200)
+        && txt(request.resource.data.photo, 0, 200000)
+        && request.resource.data.statut == 'en_attente'
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Témoignages approuvés (publics, SANS téléphone) — écrits uniquement par l'admin
+    match /temoignages_publics/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Actualités / annonces / communiqués / messages
+    match /actualites/{id} {
+      allow read: if resource.data.publie == true || isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (resource.data.publie == true
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
+            && request.resource.data.views == resource.data.views + 1);
+    }
+
+    // Tout le reste est interdit
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

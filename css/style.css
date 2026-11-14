@@ -253,8 +253,9 @@ header {
 }
 
 .logo1 img {
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
     object-fit: contain;
 }
 

@@ -1,59 +1,54 @@
-// ============================================================
-// CONFIGURATION
-// ============================================================
-var WHATSAPP_NUMBER = "243905479985"; // format international sans le +
-var VERIF_DURATION_MS = 4000; // durée de l'animation d'envoi
+// Formulaire de contact : le message arrive dans l'espace admin (onglet Messages).
+import { isConfigured, db, collection, addDoc, serverTimestamp } from "./firebase.js";
+import { cooldownOk } from "./utils.js";
 
-var contactForm = document.getElementById("contactForm");
-var ctSubmitBtn = document.getElementById("ctSubmitBtn");
-var ctLoading = document.getElementById("ctLoading");
-var ctError = document.getElementById("ctError");
-var ctWhatsappBtn = document.getElementById("ctWhatsappBtn");
+var WHATSAPP_NUMBER = "243905479985";
+var form = document.getElementById("contactForm");
+var loading = document.getElementById("ctLoading");
+var errorBox = document.getElementById("ctError");
+var okBox = document.getElementById("ctSuccess");
+var waBtn = document.getElementById("ctWhatsappBtn");
 
-var MOIS_FR = [
-  "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-];
-
-function dateDuJour() {
-  var d = new Date();
-  return d.getDate() + " " + MOIS_FR[d.getMonth()] + " " + d.getFullYear();
+function fallbackWhatsApp(v) {
+  var txt = "*NOUVEAU MESSAGE DE CONTACT*\n\n*Nom :* " + v.nom + "\n*Téléphone :* " + v.tel +
+    "\n*Email :* " + v.email + "\n*Objet :* " + v.objet + "\n*Message :* " + v.message +
+    "\n\n*Date :* " + new Date().toLocaleDateString("fr-FR");
+  waBtn.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(txt);
+  errorBox.classList.add("show");
 }
 
-contactForm.addEventListener("submit", function (e) {
+form.addEventListener("submit", async function (e) {
   e.preventDefault();
+  var v = {
+    nom: document.getElementById("ctNom").value.trim(),
+    tel: document.getElementById("ctTel").value.trim(),
+    email: document.getElementById("ctEmail").value.trim(),
+    objet: document.getElementById("ctObjet").value,
+    message: document.getElementById("ctMessage").value.trim(),
+  };
+  if (!v.nom || !v.tel || !v.email || !v.objet || !v.message) return;
 
-  var nom = document.getElementById("ctNom").value.trim();
-  var tel = document.getElementById("ctTel").value.trim();
-  var email = document.getElementById("ctEmail").value.trim();
-  var objetEl = document.getElementById("ctObjet");
-  var objet = objetEl.value;
-  var message = document.getElementById("ctMessage").value.trim();
+  if (document.getElementById("ctWebsite").value) { form.style.display = "none"; okBox.classList.add("show"); return; }
+  if (!cooldownOk("ndosho_last_contact", 30000)) { alert("Merci de patienter quelques secondes avant un nouvel envoi."); return; }
 
-  if (!nom || !tel || !email || !objet || !message) {
+  form.style.display = "none";
+  loading.classList.add("show");
+
+  if (!isConfigured) {
+    setTimeout(function () { loading.classList.remove("show"); fallbackWhatsApp(v); }, 1200);
     return;
   }
-
-  // Étape 1 : on cache le formulaire et on lance l'animation d'envoi
-  contactForm.style.display = "none";
-  ctLoading.classList.add("show");
-
-  setTimeout(function () {
-    // Étape 2 : l'envoi "échoue" et on propose la suite sur WhatsApp
-    ctLoading.classList.remove("show");
-    ctError.classList.add("show");
-
-    var waText =
-      "*NOUVEAU MESSAGE DE CONTACT*\n\n" +
-      "*Nom :* " + nom + "\n" +
-      "*Téléphone :* " + tel + "\n" +
-      "*Email :* " + email + "\n" +
-      "*Objet :* " + objet + "\n" +
-      "*Message :* " + message + "\n\n" +
-      "*Date :* " + dateDuJour() + "\n" +
-      "*Statut :* Message reçu";
-
-    ctWhatsappBtn.href =
-      "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(waText);
-  }, VERIF_DURATION_MS);
+  try {
+    await addDoc(collection(db, "messages"), {
+      nom: v.nom.slice(0, 80), tel: v.tel.slice(0, 30), email: v.email.slice(0, 120),
+      objet: v.objet.slice(0, 80), message: v.message.slice(0, 3000),
+      lu: false, createdAt: serverTimestamp(),
+    });
+    loading.classList.remove("show");
+    okBox.classList.add("show");
+  } catch (err) {
+    console.warn("Envoi message échoué", err);
+    loading.classList.remove("show");
+    fallbackWhatsApp(v);
+  }
 });
