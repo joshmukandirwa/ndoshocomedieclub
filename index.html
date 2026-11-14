@@ -5,26 +5,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="5caeQAVbDadATfH9jVNHR0_UapASoI7n9THtvhynlqM" />
-    <title>Ndosho Comedie Club</title>
+    <title>Ndosho Comédie Club</title>
     <link rel="icon" href="./logo/ndoshologo.png">
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/menu-mobile.css">
     <meta name="description"
         content="Le plus grand club d'humour de Goma. Spectacles, stand-up, festivals, découvertes de talents et événements comiques pour tous les amoureux du rire." />
     <link rel="canonical" href="https://ndosho-comedie-club.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Ndosho Comedie Club" />
-    <meta property="og:title" content="Ndosho Comedie Club — Le plus grand club d'humour de Goma" />
+    <meta property="og:site_name" content="Ndosho Comédie Club" />
+    <meta property="og:title" content="Ndosho Comédie Club — Le plus grand club d'humour de Goma" />
     <meta property="og:description"
         content="Le plus grand club d'humour de Goma. Spectacles, stand-up, festivals, découvertes de talents et événements comiques pour tous les amoureux du rire." />
     <meta property="og:url" content="https://ndosho-comedie-club.vercel.app/" />
-    <meta property="og:image" content="https://ndosho-comedie-club.vercel.app/logo/ndoshologo-3.png" />
+    <meta property="og:image" content="https://ndosho-comedie-club.vercel.app/images/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ndosho Comédie Club : des humoristes sur scène à Goma" />
     <meta property="og:locale" content="fr_FR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ndosho Comedie Club — Le plus grand club d'humour de Goma" />
+    <meta name="twitter:title" content="Ndosho Comédie Club — Le plus grand club d'humour de Goma" />
     <meta name="twitter:description"
         content="Le plus grand club d'humour de Goma. Spectacles, stand-up, festivals, découvertes de talents et événements comiques pour tous les amoureux du rire." />
-    <meta name="twitter:image" content="https://ndosho-comedie-club.vercel.app/logo/ndoshologo-3.png" />
+    <meta name="twitter:image" content="https://ndosho-comedie-club.vercel.app/images/og-image.jpg" />
 
 </head>
 
@@ -34,13 +39,13 @@
     <header>
         <nav class="navbar">
             <div class="nav-inner">
-                <div class="logo1">
-                    <img src="./logo/ndoshologo-3.png" alt="Logo" />
+                <a class="logo1" href="index.html" aria-label="Ndosho Comédie Club, accueil">
+                    <img src="./logo/ndoshologo-3.png" alt="Logo Ndosho Comédie Club" />
                     <div class="logo-text">
                         <span>NDOSHO</span>
-                        <p>COMEDIE CLUB</p>
+                        <p>COMÉDIE CLUB</p>
                     </div>
-                </div>
+                </a>
                 <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
@@ -54,20 +59,18 @@
                     <li><a href="contacts.html">Contacts</a></li>
                     <li><a href="partenaires.html">Partenaires</a></li>
                     <li><a href="temoignages.html">Témoignages</a></li>
-                    <li><a href="reservation.html" class="nav-cta">Réserver</a></li>
                 </ul>
             </div>
             <!-- Mobile dropdown -->
             <div class="mobile-menu" id="mobileMenu">
                 <a href="#hero">Accueil</a>
                 <a href="apropos.html">À propos</a>
-                <a href="humoristes.html">Nos humoristes</a>
+                <a href="humoristes.html">Humoristes</a>
                 <a href="evenements.html">Événements</a>
-                <a href="reservation.html">Réserver</a>
                 <a href="galerie.html">Galerie</a>
-                <a href="temoignages.html">Témoignages</a>
                 <a href="contacts.html">Contacts</a>
                 <a href="partenaires.html">Partenaires</a>
+                <a href="temoignages.html">Témoignages</a>
             </div>
         </nav>
     </header>
@@ -76,8 +79,8 @@
     <section class="hero" id="hero">
         <div class="hero-content">
             <p class="hero-sur">Bienvenue sur</p>
-            <h1>NDOSHO<br>COMEDIE<br>CLUB</h1>
-            <p class="hero-sub">L'univers d'humour</p>
+            <h1>NDOSHO<br>COMÉDIE<br>CLUB</h1>
+            <p class="hero-sub">L'univers de l'humour</p>
             <a href="https://www.facebook.com/profile.php?id=61562878783027" target="_blank"
                 class="btn-orange">Découvrir</a>
         </div>
@@ -94,21 +97,16 @@
             <img src="./recommandé/recommandé (21).jpg" alt="À propos" class="apropos-img" />
             <div class="apropos-body">
                 <p>
-                    Le Ndosho Comedie Club est un collectif de jeunes humoristes basé à Goma, dans la province du
-                    Nord-Kivu (RDC), créé le 20 juillet 2024. Notre mission : détecter, former et accompagner les jeunes
-                    talents humoristiques, tout en offrant à la communauté des instants de joie, d'éducation et de
-                    cohésion à travers l'art du rire.
+                    Le Ndosho Comédie Club est un collectif de jeunes humoristes de Goma, au Nord-Kivu (RDC), né le 20
+                    juillet 2024. Notre mission : repérer, former et accompagner les jeunes humoristes, tout en offrant
+                    à la communauté des moments de joie, d'apprentissage et de cohésion grâce à l'art du rire.
                 </p>
                 <p>
-                    Notre vision : construire une société où l'humour et l'art comique deviennent des vecteurs d'unité,
-                    de paix et de développement culturel, en faisant de la jeunesse une actrice de son propre
-                    épanouissement.
+                    Notre vision : construire une société où l'humour et l'art comique deviennent des moteurs d'unité,
+                    de paix et de développement culturel, et où la jeunesse est actrice de son propre épanouissement.
                 </p>
                 <div class="apropos-btns">
-                    <!-- <a href="https://www.facebook.com/profile.php?id=61562878783027" target="_blank"
-                        class="btn-outline">En savoir plus
-                    </a> -->
-                    <a href="apropos.html" target="_blank" class="btn-outline">En savoir plus</a>
+                    <a href="apropos.html" class="btn-outline">En savoir plus</a>
                     <a href="#contacts" class="btn-outline">Contacts</a>
                 </div>
             </div>
@@ -126,12 +124,12 @@
             <li class="prog-item">
                 <img src="./icons/464195.png" alt="Stand-up" class="prog-icon" />
                 <h3>Stand-up</h3>
-                <p>Des spectacles de stand-up écrits et interprétés par les meilleurs humoristes d'ici.</p>
+                <p>Des spectacles de stand-up écrits et joués par les meilleurs humoristes d'ici.</p>
             </li>
             <li class="prog-item">
                 <img src="./icons/theater masks icon.png" alt="Spectacles" class="prog-icon" />
                 <h3>Spectacles</h3>
-                <p>Des shows inédits, des sketchs et des performances à couper le souffle.</p>
+                <p>Des shows inédits, des sketchs et des performances qui coupent le souffle.</p>
             </li>
             <li class="prog-item">
                 <img src="./icons/star icon.png" alt="Découvertes" class="prog-icon" />
@@ -141,7 +139,7 @@
             <li class="prog-item">
                 <img src="./icons/people group icon.png" alt="Ateliers" class="prog-icon" />
                 <h3>Ateliers</h3>
-                <p>Formations, ateliers d'écriture et coaching scénique pour booster votre talent.</p>
+                <p>Formations, ateliers d'écriture et coaching scénique pour faire grandir votre talent.</p>
             </li>
         </ul>
     </section>
@@ -156,53 +154,39 @@
             </div>
         </div>
 
-        <div class="humor-slider-wrap">
-            <button class="slider-arrow1 arrow-prev1" id="humorPrev" aria-label="Précédent">&#10094;</button>
-            <div class="humor-slider" id="humorSlider" data-grid-break="1024">
-                <div class="comed">
-                    <img src="./humoristes/franck.jpg" alt="Sengha Franck" />
-                    <div class="comedian-content">
-                        <h3>Sengha Franck</h3>
-                        <span class="label-orange">Humoriste</span>
-                    </div>
-                </div>
-                <div class="comed">
-                    <img src="./humoristes/jaminass.jpg" alt="Jaminass Sing" />
-                    <div class="comedian-content">
-                        <h3>Jaminass S.</h3>
-                        <span class="label-orange">Humoriste</span>
-                    </div>
-                </div>
-                <div class="comed">
-                    <img src="./humoristes/felicien senzoga.jpg" alt="Senzoga Felicien" />
-                    <div class="comedian-content">
-                        <h3>Senzoga Felicien</h3>
-                        <span class="label-orange">Humoriste</span>
-                    </div>
-                </div>
-                <div class="comed">
-                    <img src="./humoristes/rapha higgins.jpg" alt="Raphael Higgins" />
-                    <div class="comedian-content">
-                        <h3>Raphael Higgins</h3>
-                        <span class="label-orange">Humoriste</span>
-                    </div>
-                </div>
+        <div class="humor-row" id="humorRow">
+            <div class="hr-card">
+                <img src="./humoristes/franck.jpg" alt="Francky Sengha" />
+                <span class="hr-name">Francky Sengha</span>
             </div>
-            <button class="slider-arrow1 arrow-next1" id="humorNext" aria-label="Suivant">&#10095;</button>
+            <div class="hr-card">
+                <img src="./humoristes/jaminass.jpg" alt="Jaminass S." />
+                <span class="hr-name">Jaminass S.</span>
+            </div>
+            <div class="hr-card">
+                <img src="./humoristes/felicien senzoga.jpg" alt="Félicien Senzoga" />
+                <span class="hr-name">Félicien Senzoga</span>
+            </div>
+            <div class="hr-card">
+                <img src="./humoristes/rapha higgins.jpg" alt="Raphaël Higgins" />
+                <span class="hr-name">Raphaël Higgins</span>
+            </div>
+            <a href="humoristes.html" class="hr-card hr-all">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14" />
+                    <path d="M13 6l6 6-6 6" />
+                </svg>
+                <span>Voir tous</span>
+            </a>
         </div>
-        <!-- <div style="display: flex;  justify-content: center; gap: 10px; margin-top: 10px;">
-            <button class="slider-arrow1 arrow-prev1" id="humorPrev" aria-label="Précédent">&#10094;</button>
-            <button class="slider-arrow1 arrow-next1" id="humorNext" aria-label="Suivant">&#10095;</button>
-        </div> -->
-        <div class="dots" id="humorDots"></div>
-        <a href="humoristes.html" class="btn-outline-full1">Voir tous les humoristes</a>
     </section>
 
     <!-- ══ ÉVÉNEMENTS ════════════════════════════════════════ -->
     <section class="evnts" id="evnts">
         <div class="section-header-row">
             <div>
-                <span class="label-orange">Tous les événements</span>
+                <span class="label-orange">Agenda</span>
                 <h2>Ne manquez rien !</h2>
                 <div class="underline"></div>
             </div>
@@ -213,61 +197,39 @@
                 <ul class="events-list">
                     <li class="event-item">
                         <div class="event-date">
-                            <span class="event-day">26</span>
-                            <span class="event-month">AVRIL</span>
-                        </div>
-                        <div class="event-info">
-                            <h3>Festival Punguza Stress — 1ère Édition</h3>
-                            <p>PAROISSE SAINT-FRANÇOIS XAVIER - NDOSHO, GOMA</p>
-                        </div>
-                    </li>
-                    <li class="event-item">
-                        <div class="event-date">
-                            <span class="event-day">26</span>
+                            <span class="event-day">24</span>
                             <span class="event-month">JANV</span>
                         </div>
                         <div class="event-info">
-                            <h3>Gala Punguza Stress</h3>
-                            <p>10 artistes du collectif et 5 artistes invités</p>
+                            <p class="event-soon" id="homeSoon" data-target="2027-01-24T00:00:00+02:00">À venir</p>
+                            <h3><a href="evenements.html#festival-punguza-stress-2e-edition">Festival Punguza Stress —
+                                    2e édition</a></h3>
+                            <p>Dimanche 24 janvier 2027 à Goma. Le lieu secret sera bientôt dévoilé !</p>
                         </div>
                     </li>
-                    <li class="event-item">
-                        <div class="event-date">
-                            <span class="event-day">05</span>
-                            <span class="event-month">NOV</span>
-                        </div>
-                        <div class="event-info">
-                            <h3>Tournée dans les écoles</h3>
-                            <p>9 écoles secondaires et 3 universités - GOMA</p>
-                        </div>
-                    </li>
-                    <!-- <li class="event-item">
-                        <div class="event-date">
-                            <span class="event-day">22</span>
-                            <span class="event-month">JUIN</span>
-                        </div>
-                        <div class="event-info">
-                            <h3>Découverte Talents</h3>
-                            <p>NDOSHO COMEDIE CLUB</p>
-                            <p class="event-time">17h00</p>
-                        </div>
-                    </li> -->
                 </ul>
-                <a href="evenements.html" class="btn-outline-full">Voir tous les événements</a>
+                <a href="evenements.html" class="btn-outline-full">Voir l'agenda</a>
             </div>
 
             <!-- Banner CTA -->
-            <div class="cta-banner">
-                <div>
-                    <img src="./logo/26avril2026.png" alt="festival">
-                </div>
+            <article class="cta-banner">
+                <a class="cta-media" href="https://youtu.be/dKrFrOV8Vsg?feature=shared" target="_blank" rel="noopener"
+                    aria-label="Regarder la vidéo de la 1ère édition du Festival Punguza Stress">
+                    <picture>
+                        <source type="image/webp"
+                            srcset="./images/replay-festival-640.webp 640w, ./images/replay-festival.webp 1080w"
+                            sizes="(min-width: 900px) 520px, 90vw" />
+                        <img src="./images/replay-festival.jpg"
+                            srcset="./images/replay-festival-640.jpg 640w, ./images/replay-festival.jpg 1080w"
+                            sizes="(min-width: 900px) 520px, 90vw" width="1080" height="525" loading="lazy"
+                            decoding="async" alt="Le public qui rit pendant la 1ère édition du Festival Punguza Stress">
+                    </picture>
+                    <span class="play-btn" aria-hidden="true"></span>
+                </a>
                 <div class="banner1">
-                    <p>Revivez les moments forts de la 1ère édition du festival punguga stress</p>
-                    <a href="https://youtu.be/dKrFrOV8Vsg?is=Iq1Jy-Rnt2v4xpT_" target="_blank"
-                        class="btn-orange">Cliquez ici pour regarder</a>
+                    <p>Revivez les moments forts de la 1ère édition du Festival Punguza Stress</p>
                 </div>
-
-            </div>
+            </article>
         </div>
     </section>
 
@@ -275,75 +237,14 @@
     <section class="commmentaires" id="commmentaires">
         <div class="section-header">
             <span class="label-orange">Ils parlent de nous</span>
-            <h2>Vos sourires, Notre fierté</h2>
+            <h2>Vos sourires, notre fierté</h2>
             <div class="underline"></div>
         </div>
 
         <p style="text-align: center;">
-            Aucun temoignage pour le moment
+            Aucun témoignage pour le moment. Soyez le premier à partager le vôtre !
         </p>
 
-        <!-- <div class="temoig-slider-wrap">
-            <button class="slider-arrow arrow-prev" id="temoigPrev" aria-label="Précédent">&#10094;</button>
-            <div class="temoig-slider" id="temoigSlider">
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>Ndosho Comedie Club est la référence de l'humour à Goma. Des spectacles toujours au top !</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Patrick K.</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>Une ambiance incroyable et des humoristes talentueux. J'ai passé une soirée mémorable !</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Grace M.</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>Le meilleur endroit où se détendre et diminuer le stress. Continuez comme ça !</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Amigos Print</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>C'était vraiment du Punguza Stress… Une équipe très talentueuse et drôle !</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Didier L.</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>Une ambiance incroyable, des artistes de talent et une organisation parfaite.</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Sarah M.</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-                <div class="avis">
-                    <div class="av"><span class="quote-mark">"</span>
-                        <p>Un événement exceptionnel ! Je reviendrai sans hésiter.</p>
-                    </div>
-                    <div class="stark">
-                        <h4>— Joël K.</h4>
-                        <p class="stars">★★★★★</p>
-                    </div>
-                </div>
-            </div>
-            <button class="slider-arrow arrow-next" id="temoigNext" aria-label="Suivant">&#10095;</button>
-        </div> -->
-        <!-- <div class="dots" id="temoigDots"></div> -->
         <a href="temoignages.html" class="btn-outline-full">Témoigner</a>
     </section>
 
@@ -376,44 +277,33 @@
             <div class="contact-icon-wrap">
                 <img src="./icons/email icon.png" alt="email" class="contact-icon" />
             </div>
-            <p>Recevez nos actualités, événements et surprises directement dans votre boite mail.</p>
+            <p>Suivez-nous sur nos réseaux sociaux pour ne rien manquer de nos actualités et de nos surprises.</p>
         </div>
-        <form class="formulaire" id="subscribeForm">
-            <input type="email" placeholder="Votre adresse email" required />
-            <button type="submit">S'abonner</button>
-        </form>
+        <div class="contact-socials">
+            <a href="https://www.facebook.com/profile.php?id=61562878783027" target="_blank" rel="noopener"><img
+                    src="./footer/facebook.png" alt="" /><span>Facebook</span></a>
+            <a href="https://www.instagram.com/ndosho.comedie.club?igsh=bWFrZjBhbmVvdXdj" target="_blank"
+                rel="noopener"><img src="./footer/insta.png" alt="" /><span>Instagram</span></a>
+            <a href="https://youtube.com/@ndoshocomedieclub-d7q?si=2iqwbvFVvwWncgmg" target="_blank" rel="noopener"><img
+                    src="./icons/YouTube (1).png" alt="" /><span>YouTube</span></a>
+            <a href="https://www.tiktok.com/@ndosho.comedie.cl?_r=1&_t=ZS-98hxGnycjI7" target="_blank"
+                rel="noopener"><img src="./icons/tok.png" alt="" /><span>TikTok</span></a>
+        </div>
+        <a href="contacts.html" class="btn-outline-full">Nous écrire</a>
     </section>
 
     <!-- ══ FOOTER ════════════════════════════════════════════ -->
     <footer>
+
         <div class="foot-inner">
 
             <div class="foot-brand">
                 <div class="foot-logo">
-                    <img src="./logo/ndoshologo-3.png" alt="Logo" />
-                    <div>
-                        <p class="foot-logo-name"><span>NDOSHO</span><br>COMEDIE CLUB</p>
-                        <!-- <p class="foot-logo-sub">L'univers de l'humour</p> -->
-                    </div>
+                    <img src="./logo/ndoshologo-3.png" alt="Logo Ndosho Comédie Club" />
+                    <p class="foot-logo-name"><span>NDOSHO</span><br>COMÉDIE CLUB</p>
                 </div>
-            </div>
-
-            <div class="foot-nav">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="index.html#hero">Accueil</a></li>
-                    <li><a href="apropos.html">À propos</a></li>
-                    <li><a href="humoristes.html">Humoristes</a></li>
-                    <li><a href="evenements.html">Événements</a></li>
-                    <li><a href="temoignages.html">Témoignages</a></li>
-                    <li><a href="partenaires.html">Partenaires</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                    <li><a href="reservation.html">Réserver</a></li>
-                </ul>
-            </div>
-
-            <div class="foot-social">
-                <h4>Nous suivre</h4>
+                <p class="foot-tagline">Chez nous, la bonne humeur rassemble tout le monde. Retrouvez-nous à Goma pour
+                    rire, partager et vivre ensemble.</p>
                 <div class="social-icons">
                     <a href="https://www.facebook.com/profile.php?id=61562878783027" aria-label="Facebook">
                         <img src="./footer/facebook.png" alt="Facebook" />
@@ -431,6 +321,20 @@
                 </div>
             </div>
 
+            <div class="foot-nav">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html#hero">Accueil</a></li>
+                    <li><a href="apropos.html">À propos</a></li>
+                    <li><a href="humoristes.html">Humoristes</a></li>
+                    <li><a href="evenements.html">Événements</a></li>
+                    <li><a href="galerie.html">Galerie</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                    <li><a href="partenaires.html">Partenaires</a></li>
+                    <li><a href="temoignages.html">Témoignages</a></li>
+                </ul>
+            </div>
+
             <div class="foot-contact">
                 <h4>Nous contacter</h4>
                 <div class="adress"><img src="./footer/phone.png" alt="Tel" />
@@ -445,16 +349,43 @@
             </div>
 
         </div>
+
         <div class="login">
-            <p>&copy; 2026 NDOSHO COMEDIE CLUB | Tous droits réservés</p>
-            <p>Conçu par <a href="#" target="_blank">EbenJosh Tech & services</a></p>
+            <p>&copy; 2026 <b>NDOSHO COMÉDIE CLUB</b> | Tous droits réservés</p>
+            <div class="foot-credit">
+                <img class="foot-credit-logo" src="./images/ebenjosh-logo.webp" width="400" height="108" loading="lazy"
+                    alt="EbenJosh Tech &amp; Services" />
+                <span class="foot-credit-name">Web developer Josué Mukandirwa</span>
+                <span class="foot-credit-links">
+                    <a href="mailto:Joshmukandirwa@gmail.com" aria-label="Email de Josué Mukandirwa"
+                        title="Joshmukandirwa@gmail.com">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="5" width="18" height="14" rx="2" />
+                            <path d="m3 7 9 6 9-6" />
+                        </svg>
+                    </a>
+                    <a href="tel:+243995876855" aria-label="Appeler Josué Mukandirwa" title="+243 995 876 855">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path
+                                d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/Joshmks01" target="_blank" rel="noopener"
+                        aria-label="Facebook de Josué Mukandirwa" title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                </span>
+            </div>
         </div>
     </footer>
 
-    <!-- Scroll to top -->
-    <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">&#8679;</button>
 
-    <script src="index.js"></script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>

@@ -9,48 +9,11 @@
 const SITE = "https://ndosho-comedie-club.vercel.app";
 
 const EVENTS = {
-  "appel-a-participation-festival-punguza-stress-2eme-edition-2027": {
-    title:
-      "Appel à participation — Festival Punguza Stress (2ème Édition) 2027",
+  "festival-punguza-stress-2e-edition": {
+    title: "Festival Punguza Stress — 2e édition",
     description:
-      "Le collectif NDOSHO COMÉDIE CLUB lance un appel à candidatures pour la 2ème édition du Festival Punguza Stress. Vidéo de prestation (5 min max) et CV artistique avant le 30 octobre 2026 à minuit.",
-    image: "logo/texte.png",
-  },
-  "la-kaza-one-man-show-de-raphael-higgins": {
-    title: "LA KAZA — One Man Show de Raphaël Higgins",
-    description:
-      "Un one man show de Raphaël Higgins inspiré du quotidien des habitants de Goma. Rodage le 28 août 2026 à 14h06 à l'Université des Martyrs du Congo (UNIM). Entrée gratuite.",
-    image: "autres identifiant/oneman.jpg",
-  },
-  "invite-felicien-senzoga-unigom-zero-stress-2e-edition": {
-    title: "Invité Félicien Senzoga | UNIGOM ZÉRO STRESS — 2è Édition",
-    description:
-      "M. l'Abbé Félicien Senzoga, invité spécial de UNIGOM ZÉRO STRESS le 7 août 2026 à l'Université de Goma (UNIGOM).",
-    image: "autres identifiant/abee.jpg",
-  },
-  "festival-punguza-stress-2eme-edition": {
-    title: "Festival Punguza Stress — 2ème Édition",
-    description:
-      "Le Festival Punguza Stress revient après le succès de sa première édition. Une programmation encore plus riche à venir. Kuwa tayari !",
-    image: "autres identifiant/soon.png",
-  },
-  "une-collaboration-porteuse-d-avenir": {
-    title: "Une collaboration porteuse d'avenir",
-    description:
-      "Rencontre avec l'organisation Ecoutemoi dans le cadre du partenariat autour du projet Festival Punguza Stress.",
-    image: "recommandé/honneur.jpg",
-  },
-  "une-experience-enrichissante": {
-    title: "Une expérience enrichissante",
-    description:
-      "Une belle expérience aux côtés d'autres jeunes, avec The Congo Tree, autour des questions liées à la jeunesse.",
-    image: "recommandé/annonce.jpg",
-  },
-  "festival-punguza-stress-1ere-edition": {
-    title: "Festival Punguza Stress — 1ère Édition",
-    description:
-      "La première édition du Festival Punguza Stress, organisée le 26 avril 2026 par le collectif Ndosho Comédie Club.",
-    image: "recommandé/festival.jpg",
+      "Rendez-vous le dimanche 24 janvier 2027 à Goma pour la 2e édition du Festival Punguza Stress. Le lieu reste un secret, il sera bientôt dévoilé. Haiko ata mbali !",
+    image: "images/punguza-2027-og.jpg",
   },
 };
 
@@ -95,7 +58,7 @@ module.exports = (req, res) => {
     escapeHtml(event.title) +
     "</title>" +
     '<meta property="og:type" content="website" />' +
-    '<meta property="og:site_name" content="Ndosho Comedie Club" />' +
+    '<meta property="og:site_name" content="Ndosho Comédie Club" />' +
     '<meta property="og:title" content="' +
     escapeHtml(event.title) +
     '" />' +
@@ -113,6 +76,9 @@ module.exports = (req, res) => {
     '" />' +
     '<meta property="og:image:width" content="1200" />' +
     '<meta property="og:image:height" content="630" />' +
+    '<meta property="og:image:alt" content="' +
+    escapeHtml(event.title) +
+    '" />' +
     '<meta property="og:url" content="' +
     pageUrl +
     '" />' +

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vérificateur de billets — Ndosho Comedie Club</title>
-    <link rel="stylesheet" href="reservation.css" />
+    <title>Vérificateur de billets — Ndosho Comédie Club</title>
+    <link rel="stylesheet" href="css/reservation.css" />
     <meta name="robots" content="noindex, nofollow" />
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
@@ -15,7 +15,7 @@
         <div class="verif-header">
             <span class="label-orange">Contrôle d'accès</span>
             <h1>Vérificateur de billets</h1>
-            <p>Scannez le QR code d'un billet pour vérifier instantanément s'il a bien été généré par le Ndosho Comedie
+            <p>Scannez le QR code d'un billet pour vérifier instantanément s'il a bien été généré par le Ndosho Comédie
                 Club.</p>
         </div>
 
@@ -232,7 +232,7 @@
         async function handleScannedText(text) {
             var data = parseTicketText(text);
             if (!data.ticketId || !data.nom || !data.sig) {
-                showInvalid('Ce QR code ne correspond pas à un billet Ndosho Comedie Club.', null);
+                showInvalid('Ce QR code ne correspond pas à un billet Ndosho Comédie Club.', null);
                 return;
             }
             statusEl.textContent = 'Vérification…';
@@ -273,7 +273,7 @@
             statusEl.textContent = '';
             iconWrap.innerHTML = CHECK_ICON;
             titleEl.textContent = 'BILLET VALIDE';
-            msgEl.textContent = 'Ce billet a bien été généré par le Ndosho Comedie Club. Entrée autorisée.';
+            msgEl.textContent = 'Ce billet a bien été généré par le Ndosho Comédie Club. Entrée autorisée.';
             fillDetails(d);
             resultEl.classList.remove('invalid');
             resultEl.classList.add('show', 'valid');

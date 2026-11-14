@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /mon-billet.html
 Disallow: /admin-billets.html
+Disallow: /verifier-billets.html
 
 Sitemap: https://ndosho-comedie-club.vercel.app/sitemap.xml

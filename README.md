@@ -1,2 +1,2 @@
 # ndoshocomedieclub-goma
-Site officiel de Ndosho Comédie Club à Goma
+Site officiel du Ndosho Comédie Club à Goma
