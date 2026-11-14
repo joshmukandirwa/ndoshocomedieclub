@@ -36,6 +36,7 @@
     <loc>https://ndosho-comedie-club.vercel.app/festival-punguza-stress.html</loc>
     <priority>0.6</priority>
   </url>
+  <!-- reservation.html : à remettre le jour de l'ouverture des réservations -->
   <url>
     <loc>https://ndosho-comedie-club.vercel.app/actualites.html</loc>
     <priority>0.8</priority>

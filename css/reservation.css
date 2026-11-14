@@ -2286,3 +2286,10 @@ header {
         padding: 30px 16px 50px;
     }
 }
+/* Réservations pas encore ouvertes (message à la place du formulaire) */
+.resa-bientot { background: var(--cream, #faf3d9); padding: 56px 20px 64px; }
+.resa-bientot-box { max-width: 480px; margin: 0 auto; text-align: center; }
+.resa-bientot-box h2 { color: #14295c; margin-bottom: 14px; }
+.resa-bientot-box p { color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+.resa-bientot-box .btn-orange { display: block; margin: 22px auto 0; max-width: 320px; }
+.resa-bientot-box .btn-outline-full { margin-top: 12px; }

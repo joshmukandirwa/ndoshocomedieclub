@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vérificateur de billets — Ndosho Comédie Club</title>
     <link rel="stylesheet" href="css/reservation.css" />
+    <link rel="stylesheet" href="css/verifier-theme.css" />
     <meta name="robots" content="noindex, nofollow" />
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
@@ -43,6 +44,7 @@
             <h2 id="verifResultTitle">—</h2>
             <p class="verif-result-msg" id="verifResultMsg">—</p>
             <div class="verif-details" id="verifDetails"></div>
+            <button class="verif-reset-btn verif-entry-btn" id="verifEntryBtn" type="button" style="display:none;">Confirmer l'entrée</button>
             <button class="verif-reset-btn" id="verifResetBtn" type="button">Scanner un autre billet</button>
         </div>
 
@@ -50,14 +52,8 @@
     </main>
 
     <script>
-        // ============================================================
-        // DOIT rester EXACTEMENT identique à TICKET_SECRET dans
-        // admin-billets.html. C'est cette clé partagée (jamais envoyée
-        // nulle part) qui permet de savoir si un billet a vraiment été
-        // signé par notre générateur, ou s'il a été fabriqué/modifié
-        // à la main. Si tu changes l'une, change l'autre.
-        // ============================================================
-        var TICKET_SECRET = 'NDOSHO-2026-CLE-SECRETE-BILLETS';
+        // La signature est vérifiée sur le serveur (/api/verifier) : aucune clé secrète n'est
+        // présente dans cette page. Une connexion internet est nécessaire pour contrôler un billet.
 
         var scanner = document.getElementById('verifScanner');
         var upload = document.getElementById('verifUpload');
@@ -73,6 +69,8 @@
         var msgEl = document.getElementById('verifResultMsg');
         var detailsEl = document.getElementById('verifDetails');
         var resetBtn = document.getElementById('verifResetBtn');
+        var entryBtn = document.getElementById('verifEntryBtn');
+        var dernierTexte = '';
         var fileInput = document.getElementById('verifFileInput');
 
         var stream = null;
@@ -196,57 +194,65 @@
             img.src = URL.createObjectURL(file);
         });
 
-        // ---------- Lecture du contenu du QR ----------
-        function parseTicketText(text) {
-            var lines = text.split('\n');
-            var data = {};
-            lines.forEach(function (line) {
-                var idx = line.indexOf(':');
-                if (idx === -1) return;
-                var key = line.slice(0, idx).trim();
-                var val = line.slice(idx + 1).trim();
-                if (key === 'ID') data.ticketId = val;
-                else if (key === 'Nom') data.nom = val;
-                else if (key === 'Téléphone') data.tel = val;
-                else if (key === 'Événement') data.eventName = val;
-                else if (key === 'Date') data.eventDate = val;
-                else if (key === 'Lieu') data.eventLieu = val;
-                else if (key === 'Montant payé') data.montant = val;
-                else if (key === 'Émis le') data.emissionDate = val;
-                else if (key === 'SIG') data.sig = val;
-            });
-            return data;
-        }
-
-        // ---------- Recalcul de la signature (même recette que admin-billets.html) ----------
-        async function computeSignature(d) {
-            var base = [d.ticketId, d.nom, d.tel, d.eventName, d.eventDate, d.eventLieu, d.montant, d.emissionDate, TICKET_SECRET].join('|');
-            var enc = new TextEncoder().encode(base);
-            var hashBuf = await crypto.subtle.digest('SHA-256', enc);
-            var hex = Array.from(new Uint8Array(hashBuf)).map(function (b) {
-                return b.toString(16).padStart(2, '0');
-            }).join('');
-            return hex.slice(0, 24).toUpperCase();
-        }
-
         async function handleScannedText(text) {
-            var data = parseTicketText(text);
-            if (!data.ticketId || !data.nom || !data.sig) {
-                showInvalid('Ce QR code ne correspond pas à un billet Ndosho Comédie Club.', null);
-                return;
-            }
+            dernierTexte = text;
             statusEl.textContent = 'Vérification…';
             try {
-                var expected = await computeSignature(data);
-                if (expected === data.sig.toUpperCase()) {
-                    showValid(data);
+                var r = await fetch('/api/verifier', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ texte: text })
+                });
+                if (!r.ok) throw new Error('http ' + r.status);
+                var res = await r.json();
+                if (res.statut === 'valide') {
+                    if (res.deja) {
+                        showInvalid('Ce billet a déjà été utilisé le ' + res.deja + '.', res.billet, 'BILLET DÉJÀ UTILISÉ');
+                    } else {
+                        showValid(res.billet, res.suivi);
+                    }
+                } else if (res.statut === 'inconnu') {
+                    showInvalid('Billet inconnu ou annulé : il ne figure plus dans la liste des billets émis.', res.billet);
+                } else if (res.statut === 'invalide') {
+                    showInvalid('Signature invalide : ce billet est un faux ou a été modifié.', res.billet);
                 } else {
-                    showInvalid('Signature invalide : ce billet est un faux ou a été modifié.', data);
+                    showInvalid('Ce QR code ne correspond pas à un billet Ndosho Comédie Club.', null);
                 }
             } catch (err) {
-                showInvalid('Erreur de vérification. Réessayez.', null);
+                statusEl.textContent = '';
+                showInvalid('Vérification impossible (pas de connexion ou serveur indisponible). Réessayez : ce n\'est pas forcément un faux billet.', null);
             }
         }
+
+        // ---------- Confirmer l'entrée (personnel, code de contrôle) ----------
+        entryBtn.addEventListener('click', async function () {
+            var code = sessionStorage.getItem('ndosho_code_controle') || window.prompt('Code de contrôle (équipe) :');
+            if (!code) return;
+            entryBtn.disabled = true;
+            try {
+                var r = await fetch('/api/entree', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ texte: dernierTexte, code: code })
+                });
+                var res = await r.json().catch(function () { return {}; });
+                if (r.ok) {
+                    sessionStorage.setItem('ndosho_code_controle', code);
+                    msgEl.textContent = 'Entrée enregistrée (' + res.quand + '). Ce billet ne pourra plus être utilisé.';
+                    entryBtn.style.display = 'none';
+                } else if (r.status === 403) {
+                    sessionStorage.removeItem('ndosho_code_controle');
+                    msgEl.textContent = 'Code de contrôle incorrect. Réessayez.';
+                } else if (r.status === 409) {
+                    showInvalid('Ce billet vient d\'être utilisé (' + (res.quand || '') + ').', null, 'BILLET DÉJÀ UTILISÉ');
+                } else {
+                    msgEl.textContent = res.erreur || 'Impossible d\'enregistrer l\'entrée. Réessayez.';
+                }
+            } catch (e) {
+                msgEl.textContent = 'Pas de connexion : entrée non enregistrée. Réessayez.';
+            }
+            entryBtn.disabled = false;
+        });
 
         // ---------- Affichage du résultat ----------
         function fillDetails(d) {
@@ -269,21 +275,23 @@
             });
         }
 
-        function showValid(d) {
+        function showValid(d, suivi) {
             statusEl.textContent = '';
+            entryBtn.style.display = suivi ? '' : 'none';
             iconWrap.innerHTML = CHECK_ICON;
             titleEl.textContent = 'BILLET VALIDE';
-            msgEl.textContent = 'Ce billet a bien été généré par le Ndosho Comédie Club. Entrée autorisée.';
+            msgEl.textContent = suivi ? 'Billet authentique et pas encore utilisé. Appuyez sur « Confirmer l\'entrée » pour le marquer comme utilisé.' : 'Ce billet a bien été généré par le Ndosho Comédie Club. Entrée autorisée.';
             fillDetails(d);
             resultEl.classList.remove('invalid');
             resultEl.classList.add('show', 'valid');
             launchConfetti();
         }
 
-        function showInvalid(message, d) {
+        function showInvalid(message, d, titre) {
             statusEl.textContent = '';
+            entryBtn.style.display = 'none';
             iconWrap.innerHTML = X_ICON;
-            titleEl.textContent = 'BILLET INVALIDE';
+            titleEl.textContent = titre || 'BILLET INVALIDE';
             msgEl.textContent = message;
             if (d) {
                 fillDetails(d);
@@ -314,6 +322,7 @@
 
         // ---------- Nouveau scan ----------
         resetBtn.addEventListener('click', function () {
+            entryBtn.style.display = 'none';
             var currentMode = modeCamBtn.classList.contains('active') ? 'camera' : 'upload';
             setMode(currentMode);
         });

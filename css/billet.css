@@ -1,0 +1,82 @@
+/* Billet Festival Punguza Stress — design partagé (admin + mon-billet.html) */
+.bp-wrap { display: none; width: 100%; max-width: 880px; overflow: hidden; position: relative; }
+.bp-wrap.show { display: block; }
+.bp-sheet {
+  --navy: #0b1a3d; --navy2: #070f26; --gold: #c9a24a; --gold2: #ecd08a; --paper: #f6f1e4; --ink: #0b1a3d; --bg: #0b2530;
+  width: 880px; height: 470px; position: relative; overflow: hidden; transform-origin: top left;
+  background: var(--bg) url("../images/ticket-bg.jpg") center / cover no-repeat;
+  font-family: "Montserrat", "Segoe UI", Arial, Helvetica, sans-serif; color: var(--ink); line-height: 1.25; text-align: left;
+}
+.bp-sheet * { box-sizing: border-box; }
+.bp-sheet [hidden] { display: none !important; }
+.bp-wm { display: none;
+ 
+  position: absolute; left: -30px; top: -40px; width: 980px; font-family: "Anton", Impact, "Arial Black", sans-serif;
+  font-size: 150px; line-height: .92; letter-spacing: 2px; color: rgba(201, 162, 74, .05); transform: rotate(-9deg); white-space: nowrap;
+}
+.bp-ticket { position: absolute; left: 36px; top: 36px; width: 808px; height: 398px; display: flex; border-radius: 14px; box-shadow: 0 18px 40px rgba(0, 0, 0, .7); }
+
+/* ---- partie principale ---- */
+.bp-main { width: 640px; height: 398px; position: relative; border-radius: 14px 0 0 14px; overflow: hidden; background: var(--navy2); }
+.bp-main::after { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(201, 162, 74, .45); border-radius: 8px; pointer-events: none; z-index: 2; }
+.bp-top { position: relative; height: 262px; overflow: hidden; }
+.bp-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.bp-fade { position: absolute; left: 0; top: 0; width: 460px; height: 100%; background: linear-gradient(90deg, rgba(7, 15, 38, .95) 0%, rgba(7, 15, 38, .78) 55%, rgba(7, 15, 38, 0) 100%); }
+.bp-head { position: absolute; left: 26px; top: 24px; display: flex; align-items: center; gap: 12px; }
+.bp-logo { width: 54px; height: 54px; background: #fff; border-radius: 50%; padding: 3px; object-fit: contain; box-shadow: 0 0 0 2px var(--gold); }
+.bp-rule { width: 1px; height: 40px; background: rgba(236, 208, 138, .6); }
+.bp-pres { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+.bp-pres span { font-size: 9px; font-weight: 700; color: rgba(255, 255, 255, .8); letter-spacing: 1.6px; text-transform: uppercase; }
+.bp-edition { background: linear-gradient(135deg, var(--gold2), var(--gold) 55%, #a8812f); color: var(--navy2); font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 12px; border-radius: 2px; }
+.bp-edition sup { font-size: 8px; }
+
+.bp-title { position: absolute; left: 26px; top: 92px; width: 380px; display: flex; flex-direction: column; align-items: flex-start; }
+.bp-title span { display: block; font-family: "Anton", Impact, "Arial Black", sans-serif; text-transform: uppercase; }
+.bp-title .t1 { font-family: "Montserrat", sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 8px; color: var(--gold2); }
+.bp-title .t2 { font-size: 66px; line-height: 1; color: #fff; letter-spacing: 2px; margin-top: 2px; text-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
+.bp-title .t3 { font-family: "Permanent Marker", "Segoe Script", cursive; font-size: 40px; line-height: 1; margin: -4px 0 0 4px; letter-spacing: 3px; color: transparent; background: linear-gradient(135deg, var(--gold2), var(--gold) 60%, #a8812f); -webkit-background-clip: text; background-clip: text; transform: rotate(-3deg); transform-origin: left; }
+.bp-title-simple .t2 { font-size: 40px; line-height: 1.05; max-width: 380px; margin-top: 10px; }
+.bp-slogan { position: absolute; left: 26px; top: 232px; margin: 0; font-size: 11px; font-style: italic; font-weight: 600; letter-spacing: .6px; color: rgba(255, 255, 255, .75); }
+.bp-slogan::before { content: ""; display: inline-block; width: 22px; height: 1px; background: var(--gold); vertical-align: middle; margin-right: 8px; }
+
+.bp-info { height: 76px; margin: 0 8px; display: flex; background: linear-gradient(180deg, #0f2150, var(--navy)); color: #fff; border-top: 1px solid var(--gold); position: relative; z-index: 3; }
+.bp-cell { flex: 1; padding: 9px 12px 6px 18px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid rgba(236, 208, 138, .25); min-width: 0; }
+.bp-cell:first-child { border-left: 0; }
+.bp-k { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold2); }
+.bp-cell b { font-size: 14px; font-weight: 800; line-height: 1.15; margin-top: 3px; overflow-wrap: anywhere; }
+.bp-cell small { font-size: 10px; color: rgba(255, 255, 255, .65); margin-top: 1px; }
+
+.bp-foot { height: 52px; margin: 0 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 12px 0 18px; background: var(--navy2); color: #fff; position: relative; z-index: 3; }
+.bp-holder { display: flex; flex-direction: column; min-width: 0; }
+.bp-for { font-size: 8.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.bp-name { font-family: "Permanent Marker", "Segoe Script", cursive; font-weight: 400; font-size: 20px; line-height: 1.1; color: var(--gold2); overflow-wrap: anywhere; }
+.bp-holder small { font-size: 9.5px; color: rgba(255, 255, 255, .6); }
+.bp-social { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-size: 9px; color: rgba(255, 255, 255, .7); white-space: nowrap; }
+.bp-social svg { display: inline-block; vertical-align: middle; margin-right: 5px; color: var(--gold2); }
+
+/* ---- souche ---- */
+.bp-stub { position: relative; width: 168px; height: 398px; border-radius: 0 14px 14px 0; background: var(--paper); display: flex; flex-direction: column; align-items: center; padding: 18px 10px 10px; border-left: 2px dashed rgba(11, 26, 61, .35); }
+.bp-stub::after { content: ""; position: absolute; inset: 8px 8px 8px 6px; border: 1px solid rgba(168, 129, 47, .55); border-radius: 0 8px 8px 0; pointer-events: none; }
+.bp-official { color: var(--navy); font-size: 9px; font-weight: 800; letter-spacing: 2.2px; text-transform: uppercase; padding-bottom: 6px; border-bottom: 1px solid var(--gold); }
+.bp-qrframe { margin-top: 12px; padding: 5px; border-radius: 4px; background: var(--navy); }
+.bp-qr { background: #fff; padding: 4px; line-height: 0; border-radius: 2px; }
+.bp-qr img { width: 118px; height: 118px; display: block; }
+.bp-admit { margin-top: 10px; font-family: "Anton", Impact, "Arial Black", sans-serif; font-weight: 400; font-size: 21px; letter-spacing: 3px; color: var(--navy); line-height: 1; }
+.bp-uid { margin-top: 7px; font-size: 8px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(11, 26, 61, .6); }
+.bp-id { font-size: 12px; font-weight: 800; letter-spacing: 1px; color: var(--navy); }
+.bp-cat { margin-top: 8px; width: 126px; padding: 4px 0 5px; border-radius: 3px; text-align: center; color: var(--navy2); background: linear-gradient(135deg, var(--gold2), var(--gold) 55%, #a8812f); }
+.bp-cat small { display: block; font-size: 7.5px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; opacity: .8; }
+.bp-cat b { display: block; font-family: "Anton", Impact, "Arial Black", sans-serif; font-weight: 400; font-size: 22px; letter-spacing: 3px; line-height: 1.05; }
+.bp-cat[data-cat="Standard"] { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--navy); }
+.bp-cat[data-cat="VVIP"] { background: linear-gradient(180deg, #1a2347, var(--navy2)); color: var(--gold2); box-shadow: inset 0 0 0 1.5px var(--gold); }
+.bp-fine { margin: 7px 0 0; font-size: 7.5px; line-height: 1.35; text-align: center; color: rgba(11, 26, 61, .75); font-weight: 600; }
+
+/* encoches : elles reprennent le fond image pour rester parfaitement transparentes */
+.bp-hole { position: absolute; width: 24px; height: 24px; border-radius: 50%; z-index: 4; background: var(--bg) url("../images/ticket-bg.jpg") no-repeat; background-size: 880px 880px; }
+.h-l { left: -12px; top: 187px; background-position: -24px -428px; }
+.h-r { right: -12px; top: 187px; background-position: -832px -428px; }
+.h-t { left: 628px; top: -12px; background-position: -664px -229px; }
+.h-b { left: 628px; bottom: -12px; background-position: -664px -627px; }
+
+/* page du client */
+.bp-page { display: flex; justify-content: center; width: 100%; }

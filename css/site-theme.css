@@ -1,0 +1,100 @@
+/* ============================================================
+   NDOSHO COMÉDIE CLUB — thème premium du site public (étape 1 : accueil)
+   Chargé après style.css, footer.css et dynamique.css : il ne fait que
+   surcharger l'apparence. Retirer la ligne <link> pour revenir à l'ancien style.
+   Ambiance : nuit encre, papier crème chaud, orange braise en touche.
+   ============================================================ */
+:root {
+    --navy: #0b1533; --navy-dark: #070d22; --cream: #f3ead4; --orange: #f0522a; --black: #14171f; --gray: #5d6270;
+    --gold: #d9b45a; --line-dark: rgba(243, 234, 212, 0.14); --line-light: rgba(11, 21, 51, 0.14);
+    --display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+    --text: "Montserrat", "Segoe UI", system-ui, sans-serif;
+}
+body { font-family: var(--text); background: var(--cream); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; letter-spacing: 0.02em; line-height: 1.05; }
+p { line-height: 1.7; }
+section { padding: 96px 20px; }
+::selection { background: var(--orange); color: #fff; }
+
+/* ---- entêtes de section : petit repère éditorial, plus de pastille ni de barre ---- */
+.label-orange { background: none; color: var(--orange); padding: 0 0 0 38px; position: relative; font-size: 0.74rem; letter-spacing: 0.28em; margin-bottom: 16px; }
+.label-orange::before { content: ""; position: absolute; left: 0; top: 50%; width: 28px; height: 1px; background: currentColor; }
+.underline { display: none; }
+.section-header h2, .section-header-row h2 { font-size: clamp(2.2rem, 6vw, 3.6rem); letter-spacing: 0.03em; }
+.section-header { margin-bottom: 56px; }
+.section-header .label-orange { padding-left: 0; }
+.section-header .label-orange::before { display: none; }
+
+/* ---- boutons : rectangulaires, espacés, remplissage au survol ---- */
+.btn-orange, .btn-outline, .btn-outline-full, .btn-outline-sm {
+    font-family: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.76rem;
+    border-radius: 0; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.btn-orange { background: var(--orange); color: #fff; border: 1px solid var(--orange); padding: 16px 30px; }
+.btn-orange:hover { background: transparent; color: var(--orange); transform: none; }
+.btn-outline, .btn-outline-full, .btn-outline-sm { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+.btn-outline:hover, .btn-outline-full:hover, .btn-outline-sm:hover { background: var(--navy); color: var(--cream); }
+.humoristes .btn-outline-sm, .evnts .btn-outline-full, .contacts .btn-outline-full { color: var(--cream); border-color: rgba(243, 234, 212, 0.5); }
+.humoristes .btn-outline-sm:hover, .evnts .btn-outline-full:hover, .contacts .btn-outline-full:hover { background: var(--cream); color: var(--navy); }
+
+/* ---- barre de navigation ---- */
+header { background: rgba(11, 21, 51, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-dark); box-shadow: none; }
+.nav-links a { font-family: var(--text); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(243, 234, 212, 0.82); }
+.nav-links a:hover, .nav-links a.active { color: #fff; }
+.mobile-menu { background: var(--navy-dark); }
+.mobile-menu a { font-family: var(--text); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.8rem; border-color: var(--line-dark); }
+
+/* ---- hero ---- */
+.hero { position: relative; min-height: 88vh; background-size: cover; background-position: center; isolation: isolate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(7, 13, 34, 0.92) 0%, rgba(7, 13, 34, 0.7) 55%, rgba(7, 13, 34, 0.35) 100%), linear-gradient(0deg, rgba(7, 13, 34, 0.85) 0%, transparent 40%); }
+.hero-content { max-width: 1100px; padding: 0 4px; }
+.hero-sur { font-size: 0.78rem; letter-spacing: 0.32em; color: var(--gold); display: flex; align-items: center; gap: 14px; }
+.hero-sur::before { content: ""; width: 34px; height: 1px; background: var(--gold); }
+.hero h1 { font-size: clamp(3.6rem, 15vw, 8.4rem); line-height: 0.92; letter-spacing: 0.01em; color: #fff; }
+.hero-sub { font-size: 1rem; letter-spacing: 0.04em; color: rgba(243, 234, 212, 0.78); font-weight: 500; max-width: 420px; }
+
+/* ---- à propos ---- */
+.apropos-card { border: 1px solid var(--line-light); background: #fbf6e8; box-shadow: none; }
+.apropos-img { filter: saturate(0.92); }
+.apropos-body p { color: #2b303c; }
+
+/* ---- programmes ---- */
+.prog-item { background: transparent; border: 0; border-top: 1px solid var(--line-light); padding: 30px 4px 8px; text-align: left; }
+.prog-item:hover { transform: none; border-color: var(--orange); }
+.prog-icon { margin: 0 0 18px; width: 44px; height: 44px; }
+.prog-item h3 { font-size: 1.5rem; color: var(--navy); letter-spacing: 0.04em; }
+.prog-item p { color: var(--gray); }
+
+/* ---- humoristes ---- */
+.humoristes { background: var(--navy); }
+.hr-card { background: var(--navy-dark); border: 1px solid var(--line-dark); border-radius: 0; }
+.hr-name { font-family: var(--display); font-weight: 400; letter-spacing: 0.06em; background: linear-gradient(0deg, rgba(7, 13, 34, 0.95), transparent); }
+.hr-all { border-radius: 0; border: 1px dashed rgba(243, 234, 212, 0.4); background: transparent; color: var(--cream); }
+
+/* ---- événements ---- */
+.evnts { background: var(--navy-dark); }
+.event-item { background: transparent; border: 0; border-bottom: 1px solid var(--line-dark); border-radius: 0; }
+.event-date { background: transparent; color: var(--gold); border: 1px solid rgba(217, 180, 90, 0.5); border-radius: 0; }
+.event-day { font-family: var(--display); font-weight: 400; }
+.event-info h3 { font-size: 1.35rem; letter-spacing: 0.04em; color: #fff; }
+.cta-banner img, .cta-banner .banner1 { border-radius: 0; }
+
+/* ---- témoignages ---- */
+.avis { background: #fbf6e8; border: 1px solid var(--line-light); border-radius: 0; box-shadow: none; }
+.quote-mark { color: var(--orange); font-family: var(--display); }
+.stark h4 { font-family: var(--text); font-weight: 800; letter-spacing: 0.02em; text-transform: none; color: var(--navy); }
+.stars { color: var(--orange); }
+
+/* ---- galerie ---- */
+.galerie-grid img { border-radius: 0; filter: saturate(0.9); transition: filter 0.3s ease, transform 0.3s ease; }
+.galerie-grid img:hover { filter: saturate(1.1); }
+
+/* ---- contacts et formulaire ---- */
+.contacts { background: var(--navy); }
+.formulaire input, .formulaire textarea { border-radius: 0; border: 1px solid rgba(243, 234, 212, 0.25); background: rgba(243, 234, 212, 0.06); color: var(--cream); font-family: var(--text); }
+.formulaire input:focus, .formulaire textarea:focus { border-color: var(--gold); outline: none; }
+.formulaire button { border-radius: 0; font-family: var(--text); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+
+/* ---- pied de page ---- */
+footer { background: var(--navy-dark); border-top: 1px solid var(--line-dark); }
+footer h4, footer h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0.06em; }

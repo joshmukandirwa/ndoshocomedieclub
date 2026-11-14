@@ -1,0 +1,70 @@
+/* Billetterie Punguza Stress 2e édition : formulaire + carousel paiement
+   Design v11 (bleu, crème, orange) — sans ombres noires, espacements alignés sur le reste du site */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Étape 1 : formulaire ---------- */
+.reserv-form-section { padding: 56px 20px 64px; background: var(--navy, #1b3a7a); }
+.reserv-form-section .section-header { margin-bottom: 26px; }
+.reserv-form-section .section-header h2,
+.reserv-form-section .section-header p { color: #faf3d9; }
+.reserv-form-section .section-header p,
+.pay-section .section-header p { max-width: 430px; margin: 16px auto 0; line-height: 1.6; }
+
+.resa-form {
+  max-width: 520px; margin: 0 auto; padding: 26px 22px 24px;
+  background: #faf3d9; border: 0; border-radius: 18px; box-shadow: none;
+  display: flex; flex-direction: column; gap: 6px; text-align: left;
+}
+.resa-form label, .resa-label {
+  font-weight: 800; color: #14295c; font-size: .9rem; margin: 10px 0 2px; text-align: left;
+}
+.resa-form label:first-child { margin-top: 0; }
+.resa-form input[type="text"], .resa-form input[type="tel"] {
+  width: 100%; box-sizing: border-box; padding: 14px 16px; font: inherit; font-size: 1rem;
+  border: 2px solid rgba(20, 41, 92, .22); border-radius: 12px; background: #fff; color: #1a1a1a;
+}
+.resa-form input:focus { outline: none; border-color: #f24822; box-shadow: 0 0 0 3px rgba(242, 72, 34, .18); }
+
+.resa-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+.resa-cat { margin: 0 !important; cursor: pointer; }
+.resa-cat input { position: absolute; opacity: 0; pointer-events: none; }
+.resa-cat span {
+  display: block; text-align: center; padding: 13px 6px; font-weight: 800; color: #14295c;
+  background: #fff; border: 2px solid rgba(20, 41, 92, .22); border-radius: 12px;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.resa-cat input:checked + span { background: #f24822; border-color: #f24822; color: #faf3d9; transform: none; box-shadow: none; }
+.resa-cat input:focus-visible + span { outline: 3px solid #1b3a7a; outline-offset: 2px; }
+
+.resa-submit[disabled] { opacity: .6; cursor: wait; }
+.resa-error { color: #b3261e; font-weight: 700; margin: 6px 0 0; }
+
+.resa-ok {
+  max-width: 520px; margin: 0 auto; padding: 26px 22px; text-align: center;
+  background: #faf3d9; border: 0; border-radius: 18px; box-shadow: none;
+}
+.resa-ok h3 { color: #14295c; margin: 0 0 8px; }
+.resa-ok p { color: #1a1a1a; margin: 0 0 16px; }
+
+/* ---------- Étape 2 : moyens de paiement ---------- */
+.pay-section { padding: 56px 20px 60px; background: #faf3d9; }
+.pay-section .section-header { margin-bottom: 26px; }
+.pay-section .section-header h2 { color: #14295c; }
+.pay-section .section-header p { color: #1a1a1a; }
+
+/* Défile en boucle tout seul (comme les humoristes et la galerie) */
+.pay-slider-wrap { max-width: 760px; margin: 0 auto; }
+.pay-slider {
+  display: flex; gap: 12px; overflow-x: auto; padding: 0;
+  scroll-snap-type: none; scroll-behavior: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.pay-slider::-webkit-scrollbar { display: none; }
+.pay-card {
+  flex: 0 0 58%; margin: 0; border: 0; border-radius: 16px; box-shadow: none;
+  overflow: hidden; background: transparent;
+}
+.pay-card img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.pay-note { max-width: 440px; margin: 26px auto 0; text-align: center; color: #14295c; font-weight: 600; line-height: 1.6; font-size: 1rem; }
+
+@media (min-width: 700px) { .pay-card { flex-basis: 28%; } }

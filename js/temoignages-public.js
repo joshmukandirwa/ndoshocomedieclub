@@ -1,18 +1,22 @@
 // Carousel des témoignages APPROUVÉS (accueil + page témoignages).
 // Lit la collection publique "temoignages_publics" (sans numéro de téléphone).
-import { isConfigured, db, collection, getDocs, query, orderBy, limit } from "./firebase.js";
-import { EXEMPLES_TEMOIGNAGES } from "./data-exemples.js";
-import { el, safeImg, initials, stars, tronquer } from "./utils.js";
+import { isConfigured, db, collection, doc, getDoc, getDocs, query, orderBy, limit } from "./firebase.js";
+import { el, safeImg, initials, stars, tronquer, icone } from "./utils.js";
 
 async function charger() {
-  if (!isConfigured) return EXEMPLES_TEMOIGNAGES;
+  if (!isConfigured) return [];
   try {
     const snap = await getDocs(query(collection(db, "temoignages_publics"), orderBy("date", "desc"), limit(30)));
     const items = snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
-    return items.length ? items : EXEMPLES_TEMOIGNAGES;
+    // même auteur + même message = un seul témoignage affiché
+    const vus = {};
+    return items.filter(function (t) {
+      const cle = String(t.nom || "").trim().toLowerCase() + "|" + String(t.message || "").trim().toLowerCase();
+      if (vus[cle]) return false; vus[cle] = true; return true;
+    });
   } catch (e) {
     console.warn("Témoignages : lecture impossible", e);
-    return EXEMPLES_TEMOIGNAGES;
+    return [];
   }
 }
 
@@ -48,6 +52,29 @@ function carte(t, i) {
   return card;
 }
 
+// ---------- partage (lien avec aper\u00e7u : photo + nom + extrait du t\u00e9moignage) ----------
+var toast;
+function afficherToast(msg) {
+  if (!toast) { toast = el("div", "actu-toast"); toast.setAttribute("role", "status"); document.body.appendChild(toast); }
+  toast.textContent = msg; toast.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(function () { toast.classList.remove("show"); }, 2200);
+}
+function lienPartage(t) {
+  // Vrais t\u00e9moignages : lien avec aper\u00e7u (image + titre) sur WhatsApp, Facebook...
+  if (isConfigured && t.id) return location.origin + "/api/temoignage?id=" + encodeURIComponent(t.id);
+  return location.origin + location.pathname.replace(/[^/]*$/, "") + "temoignages.html";
+}
+function copier(url) {
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { afficherToast("Lien copi\u00e9"); }, function () { afficherToast(url); });
+  else afficherToast(url);
+}
+function partager(t) {
+  var url = lienPartage(t);
+  if (navigator.share) {
+    navigator.share({ url: url }).catch(function (e) { if (e && e.name !== "AbortError") copier(url); });
+  } else copier(url);
+}
+
 // ---------- fen\u00eatre pour lire un t\u00e9moignage en entier ----------
 var modal;
 function lire(t) {
@@ -56,10 +83,18 @@ function lire(t) {
     modal.setAttribute("role", "dialog"); modal.setAttribute("aria-modal", "true");
     const box = el("div", "actu-modal-box");
     const bar = el("div", "actu-modal-bar");
-    bar.appendChild(el("span"));
+    const gauche = el("span");
+    bar.appendChild(gauche);
+    const droite = el("div", "temoig-bar-actions");
+    const lien = el("button", "actu-modal-close temoig-share"); lien.type = "button";
+    lien.setAttribute("aria-label", "Partager ce t\u00e9moignage"); lien.title = "Partager";
+    lien.appendChild(icone("lien", 18));
+    lien.addEventListener("click", function () { if (modal._t) partager(modal._t); });
+    droite.appendChild(lien);
     const x = el("button", "actu-modal-close", "\u00d7"); x.type = "button"; x.setAttribute("aria-label", "Fermer");
     x.addEventListener("click", function () { modal.hidden = true; document.body.classList.remove("menu-lock"); });
-    bar.appendChild(x);
+    droite.appendChild(x);
+    bar.appendChild(droite);
     box.appendChild(bar);
     box.appendChild(el("div", "actu-modal-body"));
     modal.appendChild(box);
@@ -67,6 +102,7 @@ function lire(t) {
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) x.click(); });
     document.body.appendChild(modal);
   }
+  modal._t = t;
   const body = modal.querySelector(".actu-modal-body");
   body.textContent = "";
   const c = carte(t, 0);
@@ -82,11 +118,36 @@ function whenReady(cb) {
   else window.addEventListener("DOMContentLoaded", cb);
 }
 
+// Lien partag\u00e9 (temoignages.html?t=ID) : ouvre directement ce t\u00e9moignage
+async function ouvrirDepuisLien() {
+  const id = new URLSearchParams(location.search).get("t");
+  if (!id || !/^[\w-]{1,60}$/.test(id) || !isConfigured) return;
+  let t = LISTE.find(function (x) { return x.id === id; });
+  if (!t) {
+    try {
+      const d = await getDoc(doc(db, "temoignages_publics", id));
+      if (d.exists()) t = Object.assign({ id: d.id }, d.data());
+    } catch (e) { return; }
+  }
+  if (t) lire(t);
+}
+
 export async function initCarouselTemoignages() {
   const slider = document.getElementById("temoigSlider");
   if (!slider) return;
   LISTE = await charger();
+  ouvrirDepuisLien();
   slider.textContent = "";
+  if (!LISTE.length) {
+    // Aucun témoignage publié : on cache le carousel et on invite à en laisser un
+    const section = slider.closest("section");
+    if (section && !section.querySelector(".temoig-vide")) {
+      const p = el("p", "temoig-vide", "Soyez le premier à partager votre expérience avec le Ndosho Comédie Club !");
+      const wrap0 = slider.closest(".temoig-slider-wrap");
+      if (wrap0) wrap0.insertAdjacentElement("afterend", p); else section.appendChild(p);
+    }
+    return;
+  }
   LISTE.forEach(function (t, i) { slider.appendChild(carte(t, i)); });
   const wrap = slider.closest(".temoig-slider-wrap");
   if (wrap) wrap.hidden = false;

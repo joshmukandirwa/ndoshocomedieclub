@@ -30,14 +30,8 @@ if (!ticket || !ticket.nom || !ticket.ticketId) {
 } else {
   document.title = "Billet — " + ticket.eventName + " — Ndosho Comédie Club";
 
-  document.getElementById("tkOutEvent").textContent = "Billet";
-  document.getElementById("tkOutNom").textContent = ticket.nom;
-  document.getElementById("tkOutTel").textContent = ticket.tel;
-  document.getElementById("tkOutLieu").textContent = ticket.eventLieu;
-  document.getElementById("tkOutDate").textContent = ticket.eventDate;
-  document.getElementById("tkOutMontant").textContent = ticket.montant;
-  document.getElementById("tkOutId").textContent = ticket.ticketId;
-  document.getElementById("tkOutIdSide").textContent = ticket.ticketId;
+  var ticketCard = document.getElementById("ticketCard");
+  window.BilletUI.remplir(ticketCard, ticket);
 
   var qrText =
     "NDOSHO COMÉDIE CLUB — BILLET\n" +
@@ -70,29 +64,19 @@ if (!ticket || !ticket.nom || !ticket.ticketId) {
     "\n" +
     "Ce billet est unique et non transférable.";
 
-  var qrImg = document.getElementById("tkQrImg");
-  var qrEl = document.getElementById("tkQr");
-  qrImg.onerror = function () {
-    qrEl.innerHTML =
-      '<p style="font-size:10px;color:#c0392b;padding:6px;max-width:100px;">QR indisponible (vérifiez votre connexion internet)</p>';
-  };
-  qrImg.src =
-    "https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=" +
-    encodeURIComponent(qrText);
+  window.BilletUI.qr(ticketCard, qrText, function () {
+    document.getElementById("tkQr").innerHTML =
+      '<p style="font-size:10px;color:#c0392b;padding:6px;max-width:100px;line-height:1.2;">QR indisponible (vérifiez votre connexion internet)</p>';
+  });
 
   document.getElementById("downloadBtn").addEventListener("click", function () {
-    var ticketCard = document.getElementById("ticketCard");
     if (typeof html2canvas === "undefined") {
       alert(
         "Le téléchargement est indisponible (la librairie n'a pas pu charger). Vérifiez votre connexion internet et rechargez la page.",
       );
       return;
     }
-    html2canvas(ticketCard, {
-      backgroundColor: null,
-      scale: 2,
-      useCORS: true,
-    })
+    window.BilletUI.versCanvas(ticketCard)
       .then(function (canvas) {
         try {
           var link = document.createElement("a");

@@ -1,0 +1,65 @@
+/* ============================================================
+   BOUTONS — un seul design pour tout le site public
+   (orange plein, texte crème, majuscules). Chargé en dernier.
+   ============================================================ */
+.btn-orange,
+.btn-outline,
+.btn-outline-full,
+.btn-outline-full1,
+.btn-outline-sm,
+.btn-whatsapp-cta,
+.resa-submit,
+.hr-all {
+    display: inline-block;
+    box-sizing: border-box;
+    background: var(--orange, #f24822);
+    color: var(--cream, #faf3d9);
+    border: 2px solid var(--orange, #f24822);
+    border-radius: 0;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+    padding: 16px 28px;
+    margin-bottom: 0;
+    white-space: normal;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+.btn-orange:hover,
+.btn-outline:hover,
+.btn-outline-full:hover,
+.btn-outline-full1:hover,
+.btn-outline-sm:hover,
+.btn-whatsapp-cta:hover,
+.resa-submit:hover,
+.hr-all:hover {
+    background: #d63a17;
+    border-color: #d63a17;
+    color: var(--cream, #faf3d9);
+}
+/* variantes « pleine largeur » : même look, juste étirées */
+.btn-outline-full,
+.btn-outline-full1 { display: block; width: 100%; max-width: 320px; margin: 30px auto 0; }
+.resa-submit { display: block; width: 100%; margin-top: 14px; }
+.resa-submit[disabled] { opacity: .6; cursor: wait; }
+/* « Tous les humoristes » garde sa place dans la rangée (carte), même couleur */
+.hr-all { display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 0.8rem; }
+@media (max-width: 380px) { .btn-orange, .btn-outline, .btn-whatsapp-cta { font-size: 14px; padding: 14px 20px; } }
+
+/* Partager (carte à la une) : même design que les autres boutons */
+.evnt-share-btn--pill {
+    background: var(--orange, #f24822); color: var(--cream, #faf3d9);
+    border: 2px solid var(--orange, #f24822); border-radius: 0; padding: 16px 28px; font-size: 15px;
+}
+.evnt-share-btn--pill:hover { background: #d63a17; border-color: #d63a17; color: var(--cream, #faf3d9); }
+
+/* Réservation pas encore ouverte : même forme, couleur éteinte, non cliquable */
+.btn-indispo, .btn-indispo:hover, .evnt-card-foot a.btn-indispo, .evnt-card-foot a.btn-indispo:hover {
+    background: #d9d3bd !important; border-color: #d9d3bd !important; color: #6b665a !important;
+    cursor: not-allowed; box-shadow: none; transform: none;
+}

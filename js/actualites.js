@@ -1,20 +1,19 @@
 // Actualités / annonces / communiqués / messages + compteur de vues.
 // Page actualites.html (liste complète + fenêtre de lecture) et accueil (3 dernières).
 import { isConfigured, db, collection, getDocs, query, where, limit, doc, updateDoc, increment } from "./firebase.js";
-import { EXEMPLES_ACTUS } from "./data-exemples.js";
-import { el, paragraphs, safeImg, formatDate, toDate, TYPES, tronquer, icone, avecIcone } from "./utils.js";
+import { el, paragraphs, safeImg, formatDate, toDate, TYPES, tronquer, icone, avecIcone, RESEAUX, lienReseau } from "./utils.js";
 
 var items = [];
 
 async function charger() {
-  if (!isConfigured) return EXEMPLES_ACTUS.slice();
+  if (!isConfigured) return [];
   try {
     var snap = await getDocs(query(collection(db, "actualites"), where("publie", "==", true), limit(100)));
     var list = snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
-    return list.length ? list : EXEMPLES_ACTUS.slice();
+    return list;
   } catch (e) {
     console.warn("Actualités : lecture impossible", e);
-    return EXEMPLES_ACTUS.slice();
+    return [];
   }
 }
 function trier(list) {
@@ -45,7 +44,7 @@ function afficherToast(msg) {
 function lienPartage(a) {
   var base = location.origin + location.pathname.replace(/[^/]*$/, "");
   // Vraies publications : lien avec aperçu (image + titre) sur WhatsApp, Facebook...
-  if (isConfigured && !String(a.id).startsWith("ex")) return location.origin + "/api/actualite?id=" + encodeURIComponent(a.id);
+  if (isConfigured) return location.origin + "/api/actualite?id=" + encodeURIComponent(a.id);
   return base + "actualites.html?id=" + encodeURIComponent(a.id);
 }
 function partager(a) {
@@ -64,6 +63,24 @@ function boutonPartage(a, cls) {
   b.appendChild(icone("lien", 18));
   b.addEventListener("click", function (e) { e.stopPropagation(); partager(a); });
   return b;
+}
+
+// Icônes des réseaux : uniquement ceux dont l'admin a saisi un lien
+function reseaux(a, cls) {
+  var box = null;
+  RESEAUX.forEach(function (r) {
+    var href = lienReseau(a[r.cle], r);
+    if (!href) return;
+    if (!box) { box = el("div", cls); }
+    var lien = el("a", "actu-social-link"); lien.href = href; lien.target = "_blank"; lien.rel = "noopener noreferrer";
+    lien.setAttribute("aria-label", "Voir la publication sur " + r.nom); lien.title = r.nom;
+    var im = el("img"); im.src = r.img; im.alt = r.nom; im.loading = "lazy";
+    lien.appendChild(im);
+    lien.addEventListener("click", function (e) { e.stopPropagation(); });
+    lien.addEventListener("keydown", function (e) { e.stopPropagation(); });
+    box.appendChild(lien);
+  });
+  return box;
 }
 
 function carte(a) {
@@ -92,6 +109,8 @@ function carte(a) {
   foot.appendChild(el("span", "actu-date", formatDate(a.date)));
   foot.appendChild(vuesNode(a));
   body.appendChild(foot);
+  var rs = reseaux(a, "actu-social actu-social--carte");
+  if (rs) body.appendChild(rs);
   c.appendChild(body);
   function ouvrir() { ouvrirModal(a); }
   c.addEventListener("click", ouvrir);
@@ -138,6 +157,13 @@ function ouvrirModal(a) {
   modalBody.appendChild(meta);
   modalBody.appendChild(el("h2", "actu-modal-title", a.titre));
   var txt = el("div", "actu-modal-text"); paragraphs(txt, a.contenu); modalBody.appendChild(txt);
+  var rsm = reseaux(a, "actu-social actu-social--modal");
+  if (rsm) {
+    var bloc = el("div", "actu-social-bloc");
+    bloc.appendChild(el("p", "actu-social-titre", "Voir la publication sur"));
+    bloc.appendChild(rsm);
+    modalBody.appendChild(bloc);
+  }
   var foot = el("div", "actu-modal-foot");
   foot.appendChild(vuesNode(a));
   modalBody.appendChild(foot);
@@ -148,7 +174,7 @@ function ouvrirModal(a) {
   var key = "ndosho_vu_" + a.id;
   var deja = false;
   try { deja = sessionStorage.getItem(key) === "1"; sessionStorage.setItem(key, "1"); } catch (e) {}
-  if (!deja && isConfigured && !String(a.id).startsWith("ex")) {
+  if (!deja && isConfigured) {
     updateDoc(doc(db, "actualites", a.id), { views: increment(1) }).then(function () {
       a.views = (a.views || 0) + 1;
       majVues(a);
@@ -162,6 +188,9 @@ function filtres(list) {
   if (!box) return;
   var presents = {};
   list.forEach(function (a) { presents[a.type] = true; });
+  // Rien à filtrer (aucune publication, ou un seul type) : pas de bouton « Tout »
+  if (list.length === 0 || Object.keys(presents).length < 2) { box.hidden = true; return; }
+  box.hidden = false;
   function bouton(code, label) {
     var b = el("button", "actu-chip" + (code === "tous" ? " active" : ""), label); b.type = "button";
     b.addEventListener("click", function () {
@@ -177,7 +206,7 @@ function filtres(list) {
 function afficher(list) {
   var grid = document.getElementById("actuGrid");
   grid.textContent = "";
-  if (!list.length) { grid.appendChild(el("p", "actu-vide", "Rien à afficher pour le moment.")); return; }
+  if (!list.length) { grid.appendChild(el("p", "actu-vide", "Aucune actualité pour le moment. Revenez bientôt !")); return; }
   list.forEach(function (a) { grid.appendChild(carte(a)); });
 }
 
@@ -194,6 +223,7 @@ async function init() {
   }
   if (home) {
     home.textContent = "";
+    if (!items.length) { home.appendChild(el("p", "actu-vide", "Aucune actualité pour le moment. Revenez bientôt !")); return; }
     items.slice(0, 3).forEach(function (a) { home.appendChild(carte(a)); });
   }
 }

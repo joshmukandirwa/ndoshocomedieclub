@@ -72,7 +72,8 @@ export function cooldownOk(key, ms) {
   return true;
 }
 // Redimensionne une photo côté navigateur -> data URL JPEG légère
-export function resizeImage(file, max, quality, square) {
+// fond (facultatif) : couleur de fond, utile pour les logos PNG transparents (le JPEG n'a pas de transparence)
+export function resizeImage(file, max, quality, square, fond) {
   return new Promise(function (resolve, reject) {
     if (!file || !/^image\//.test(file.type)) return reject(new Error("Fichier non valide"));
     if (file.size > 15 * 1024 * 1024) return reject(new Error("Image trop lourde (15 Mo max)"));
@@ -84,7 +85,9 @@ export function resizeImage(file, max, quality, square) {
       const k = Math.min(1, max / Math.max(sw, sh));
       const c = document.createElement("canvas");
       c.width = Math.round(sw * k); c.height = Math.round(sh * k);
-      c.getContext("2d").drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
+      const ctx = c.getContext("2d");
+      if (fond) { ctx.fillStyle = fond; ctx.fillRect(0, 0, c.width, c.height); }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
       URL.revokeObjectURL(url);
       resolve(c.toDataURL("image/jpeg", quality));
     };
@@ -96,3 +99,22 @@ export const TYPES = {
   actualite: "Actualité", annonce: "Annonce", communique: "Communiqué",
   message: "Message", evenement: "Événement", autre: "Autre",
 };
+
+// Liens vers une publication sur un réseau social (Facebook, Instagram, TikTok).
+// Renvoie l'adresse https nettoyée, ou "" si ce n'est pas un vrai lien de ce réseau.
+export const RESEAUX = [
+  { cle: "lienFacebook",  nom: "Facebook",  domaines: ["facebook.com", "fb.com", "fb.watch", "fb.me"],              img: "footer/facebook.png" },
+  { cle: "lienInstagram", nom: "Instagram", domaines: ["instagram.com", "instagr.am"],                              img: "footer/insta.png" },
+  { cle: "lienTiktok",    nom: "TikTok",    domaines: ["tiktok.com"],                                               img: "icons/tok.png" },
+];
+export function lienReseau(valeur, reseau) {
+  let v = String(valeur || "").trim();
+  if (!v) return "";
+  if (!/^https?:\/\//i.test(v)) v = "https://" + v;
+  let u;
+  try { u = new URL(v); } catch (e) { return ""; }
+  if (u.protocol !== "https:" && u.protocol !== "http:") return "";
+  const h = u.hostname.toLowerCase();
+  const ok = reseau.domaines.some(function (d) { return h === d || h.endsWith("." + d); });
+  return ok ? u.href.slice(0, 500) : "";
+}

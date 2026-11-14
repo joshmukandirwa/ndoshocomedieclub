@@ -5,8 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0d0f15" />
     <title>Espace admin — Ndosho Comédie Club</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&family=Permanent+Marker&display=swap" />
+    <link rel="stylesheet" href="css/billet.css" />
     <link rel="stylesheet" href="css/admin.css" />
+    <link rel="stylesheet" href="css/admin-theme.css" />
     <link rel="icon" href="./logo/ndoshologo.png">
 </head>
 
@@ -14,94 +18,407 @@
 
     <!-- ══ CONNEXION ═══════════════════════════════════════ -->
     <main class="login-view" id="loginView">
+        <div class="login-bg" aria-hidden="true">
+            <span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span>
+            <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span><span class="spark s5"></span>
+        </div>
+
         <form class="login-card" id="loginForm" autocomplete="on">
-            <img src="./logo/ndoshologo-3.png" alt="Ndosho Comédie Club" class="login-logo" />
+            <div class="login-logo-wrap"><img src="./logo/ndoshologo-3.png" alt="Ndosho Comédie Club" class="login-logo" /></div>
             <h1>Espace admin</h1>
             <p class="login-sub">Accès réservé à l'équipe du Ndosho Comédie Club.</p>
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" autocomplete="username" required />
-            <label for="loginPass">Mot de passe</label>
-            <input type="password" id="loginPass" autocomplete="current-password" required />
+
+            <div class="field">
+                <label for="loginEmail">Email</label>
+                <div class="input-wrap">
+                    <span class="input-ico" data-ico="mail" data-size="18"></span>
+                    <input type="email" id="loginEmail" autocomplete="username" placeholder="vous@exemple.com" required />
+                </div>
+            </div>
+            <div class="field">
+                <label for="loginPass">Mot de passe</label>
+                <div class="input-wrap">
+                    <span class="input-ico" data-ico="lock" data-size="18"></span>
+                    <input type="password" id="loginPass" autocomplete="current-password" placeholder="••••••••" required />
+                    <button type="button" class="input-toggle" id="passToggle" aria-label="Afficher le mot de passe" data-ico="eye" data-size="18"></button>
+                </div>
+            </div>
+
             <p class="login-error" id="loginError" role="alert" hidden></p>
-            <button type="submit" class="btn btn-primary" id="loginBtn">Se connecter</button>
+            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                <span class="btn-label">Se connecter</span>
+                <span class="btn-spin" aria-hidden="true"></span>
+                <span class="btn-check" data-ico="check" data-size="20" aria-hidden="true"></span>
+            </button>
             <a href="index.html" class="login-back">← Retour au site</a>
         </form>
     </main>
 
     <!-- ══ APPLICATION ═════════════════════════════════════ -->
     <div class="app-view" id="appView" hidden>
-        <header class="app-header">
-            <div>
-                <strong>Espace admin</strong>
-                <span class="app-user" id="appUser"></span>
+
+        <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+            <a class="side-brand" href="#/dashboard">
+                <img src="./logo/ndoshologo-3.png" alt="Ndosho Comédie Club" />
+                <span>Rire • Partager • Grandir</span>
+            </a>
+            <nav class="side-nav" id="sideNav"></nav>
+            <div class="side-foot">
+                <img src="./logo/ndoshologo-3.png" alt="" />
+                <strong>Ndosho Comédie Club</strong>
+                <span>Goma, RDC</span>
+                <em>Le rire, notre force !</em>
             </div>
-            <div class="app-header-actions">
-                <a href="index.html" class="btn btn-ghost">Voir le site</a>
-                <button type="button" class="btn btn-ghost" id="logoutBtn">Déconnexion</button>
-            </div>
-        </header>
+        </aside>
+        <div class="scrim" id="scrim"></div>
 
-        <nav class="tabs" role="tablist">
-            <button type="button" class="tab active" data-tab="messages" role="tab">Messages <span class="badge" id="badgeMessages" hidden>0</span></button>
-            <button type="button" class="tab" data-tab="temoignages" role="tab">Témoignages <span class="badge" id="badgeTemoignages" hidden>0</span></button>
-            <button type="button" class="tab" data-tab="actualites" role="tab">Actualités</button>
-        </nav>
+        <div class="main">
+            <header class="topbar">
+                <button type="button" class="icon-btn burger" id="menuBtn" aria-label="Ouvrir le menu" aria-controls="sidebar" data-ico="menu"></button>
 
-        <p class="banner" id="appBanner" role="alert" hidden></p>
-
-        <!-- Messages -->
-        <section class="panel" id="panel-messages">
-            <h2>Messages reçus</h2>
-            <div class="list" id="listMessages"></div>
-        </section>
-
-        <!-- Témoignages -->
-        <section class="panel" id="panel-temoignages" hidden>
-            <h2>Témoignages</h2>
-            <div class="chips" id="chipsTemoignages">
-                <button type="button" class="chip active" data-statut="en_attente">En attente</button>
-                <button type="button" class="chip" data-statut="approuve">Approuvés</button>
-                <button type="button" class="chip" data-statut="refuse">Refusés</button>
-            </div>
-            <div class="list" id="listTemoignages"></div>
-        </section>
-
-        <!-- Actualités -->
-        <section class="panel" id="panel-actualites" hidden>
-            <h2>Publier une actualité</h2>
-            <form class="card form" id="actuForm">
-                <label for="actuType">Type</label>
-                <select id="actuType">
-                    <option value="actualite">Actualité</option>
-                    <option value="annonce">Annonce</option>
-                    <option value="communique">Communiqué</option>
-                    <option value="message">Message</option>
-                    <option value="evenement">Événement</option>
-                    <option value="autre">Autre</option>
-                </select>
-                <label for="actuTitre">Titre</label>
-                <input type="text" id="actuTitre" maxlength="140" required />
-                <label for="actuContenu">Contenu</label>
-                <textarea id="actuContenu" rows="7" maxlength="8000" required></textarea>
-                <label for="actuImage">Image de la publication (facultatif : affichée sur la carte et en grand)</label>
-                <input type="file" id="actuImage" accept="image/*" />
-                <div class="img-preview" id="actuImagePreviewBox" hidden>
-                    <img id="actuImagePreview" alt="Aperçu" />
-                    <button type="button" class="btn btn-ghost btn-sm" id="actuImageRemove">Retirer l'image</button>
+                <div class="search" id="searchBox">
+                    <span class="search-ico" data-ico="search" data-size="18"></span>
+                    <input type="search" id="searchInput" placeholder="Rechercher une fonctionnalité…" autocomplete="off" aria-label="Rechercher une fonctionnalité" />
+                    <ul class="search-results" id="searchResults" role="listbox" hidden></ul>
                 </div>
-                <label class="check"><input type="checkbox" id="actuEpingle" /> Épingler en haut (à la une)</label>
-                <label class="check"><input type="checkbox" id="actuPublie" checked /> Publier tout de suite (sinon : brouillon)</label>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="actuSubmit">Publier</button>
-                    <button type="button" class="btn btn-ghost" id="actuCancel" hidden>Annuler la modification</button>
-                </div>
-            </form>
 
-            <h2 class="mt">Vos publications <span class="total-views" id="totalViews"></span></h2>
-            <div class="list" id="listActus"></div>
-        </section>
+                <div class="top-right">
+                    <span class="status" id="statusBox"><i></i><span id="statusText">En ligne</span></span>
+
+                    <div class="dropdown">
+                        <button type="button" class="icon-btn bell" id="bellBtn" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+                            <span data-ico="bell"></span>
+                            <span class="bell-badge" id="bellBadge" hidden>0</span>
+                        </button>
+                        <div class="menu notif" id="notifMenu" hidden></div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button type="button" class="user-chip" id="userBtn" aria-haspopup="true" aria-expanded="false">
+                            <span class="avatar" id="userAvatar">A</span>
+                            <span class="user-name">Admin</span>
+                            <span data-ico="chevron" data-size="16"></span>
+                        </button>
+                        <div class="menu" id="userMenu" hidden>
+                            <div class="menu-email" id="appUser"></div>
+                            <a href="index.html" class="menu-link"><span data-ico="external" data-size="16"></span> Voir le site</a>
+                            <button type="button" class="menu-link" id="logoutBtn"><span data-ico="logout" data-size="16"></span> Déconnexion</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <p class="banner" id="appBanner" role="alert" hidden></p>
+
+            <div class="views" id="views">
+
+                <!-- Tableau de bord -->
+                <section class="panel" id="panel-dashboard">
+                    <div class="hero">
+                        <div class="hero-text">
+                            <h1>Bonjour, Admin !</h1>
+                            <p>Voici un aperçu de votre club aujourd'hui.</p>
+                        </div>
+                        <p class="hero-script" aria-hidden="true">Rire, Partager,<br>Grandir</p>
+                        <img class="hero-logo" src="./logo/ndoshologo-3.png" alt="" />
+                    </div>
+
+                    <div class="stats">
+                        <article class="stat stat-gold">
+                            <span class="stat-ico" data-ico="mail" data-size="26"></span>
+                            <div><strong class="stat-num" id="statMessages">0</strong><span class="stat-label">Messages non lus</span><small id="statMessagesSub">&nbsp;</small></div>
+                        </article>
+                        <article class="stat stat-violet">
+                            <span class="stat-ico" data-ico="quote" data-size="26"></span>
+                            <div><strong class="stat-num" id="statTemoignages">0</strong><span class="stat-label">Témoignages en attente</span><small id="statTemoignagesSub">&nbsp;</small></div>
+                        </article>
+                        <article class="stat stat-green">
+                            <span class="stat-ico" data-ico="news" data-size="26"></span>
+                            <div><strong class="stat-num" id="statActus">0</strong><span class="stat-label">Actualités publiées</span><small id="statActusSub">&nbsp;</small></div>
+                        </article>
+                        <article class="stat stat-pink">
+                            <span class="stat-ico" data-ico="eye" data-size="26"></span>
+                            <div><strong class="stat-num" id="statVues">0</strong><span class="stat-label">Vues des publications</span><small>au total</small></div>
+                        </article>
+                    </div>
+
+                    <div class="dash-grid">
+                        <section class="card chart-card">
+                            <h2 class="card-title"><span data-ico="ticket" data-size="20"></span> Billets émis <small class="card-sub" id="chartSub">14 derniers jours</small></h2>
+                            <div class="chart" id="chartBillets" role="img" aria-label="Billets émis par jour sur les 14 derniers jours"></div>
+                            <p class="chart-total" id="chartTotal"></p>
+                        </section>
+                        <section class="card">
+                            <h2 class="card-title"><span data-ico="bolt" data-size="20"></span> Actions rapides</h2>
+                            <div class="qa-list">
+                                <a href="#/actualites" class="qa qa-main" data-focus="actuTitre"><span data-ico="plus" data-size="18"></span> Publier une actualité</a>
+                                <a href="#/temoignages" class="qa"><span data-ico="quote" data-size="18"></span> Valider les témoignages</a>
+                                <a href="#/contacts" class="qa"><span data-ico="mail" data-size="18"></span> Lire les messages</a>
+                                <a href="#/billets" class="qa"><span data-ico="ticket" data-size="18"></span> Générer un billet</a>
+                                <a href="index.html" class="qa" target="_blank" rel="noopener"><span data-ico="external" data-size="18"></span> Voir le site</a>
+                            </div>
+                        </section>
+                        <section class="card">
+                            <h2 class="card-title"><span data-ico="clock" data-size="20"></span> À traiter</h2>
+                            <div class="todo" id="todoList"></div>
+                        </section>
+                        <section class="card">
+                            <h2 class="card-title"><span data-ico="calendar" data-size="20"></span> Prochains événements</h2>
+                            <div class="next" id="nextList"></div>
+                        </section>
+                        <section class="card">
+                            <h2 class="card-title"><span data-ico="clock" data-size="20"></span> Activité récente</h2>
+                            <ul class="activity" id="activityList"></ul>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- Contacts (messages reçus) -->
+                <section class="panel" id="panel-contacts" hidden>
+                    <div class="view-head"><h1>Contacts</h1><p>Les messages envoyés depuis la page Contacts du site.</p></div>
+                    <div class="list" id="listMessages"></div>
+                </section>
+
+                <!-- Témoignages -->
+                <section class="panel" id="panel-temoignages" hidden>
+                    <div class="view-head"><h1>Témoignages</h1><p>Approuvez ou refusez les avis laissés par le public.</p></div>
+                    <div class="chips" id="chipsTemoignages">
+                        <button type="button" class="chip active" data-statut="en_attente">En attente</button>
+                        <button type="button" class="chip" data-statut="approuve">Approuvés</button>
+                        <button type="button" class="chip" data-statut="refuse">Refusés</button>
+                    </div>
+                    <div class="list" id="listTemoignages"></div>
+                </section>
+
+                <!-- Actualités -->
+                <section class="panel" id="panel-actualites" hidden>
+                    <div class="view-head"><h1>Actualités</h1><p>Publiez actualités, annonces, communiqués et messages.</p></div>
+                    <form class="card form" id="actuForm">
+                        <h2 class="card-title" id="actuFormTitle">Publier une actualité</h2>
+                        <label for="actuType">Type</label>
+                        <select id="actuType">
+                            <option value="actualite">Actualité</option>
+                            <option value="annonce">Annonce</option>
+                            <option value="communique">Communiqué</option>
+                            <option value="message">Message</option>
+                            <option value="evenement">Événement</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                        <label for="actuTitre">Titre</label>
+                        <input type="text" id="actuTitre" maxlength="140" required />
+                        <label for="actuContenu">Contenu</label>
+                        <textarea id="actuContenu" rows="7" maxlength="8000" required></textarea>
+                        <label for="actuImage">Image de la publication (facultatif : affichée sur la carte et en grand)</label>
+                        <input type="file" id="actuImage" accept="image/*" />
+                        <div class="img-preview" id="actuImagePreviewBox" hidden>
+                            <img id="actuImagePreview" alt="Aperçu" />
+                            <button type="button" class="btn btn-ghost btn-sm" id="actuImageRemove">Retirer l'image</button>
+                        </div>
+                        <label for="actuLienFacebook">Facebook : lien de la publication (facultatif)</label>
+                        <input type="url" id="actuLienFacebook" maxlength="500" placeholder="https://www.facebook.com/..." inputmode="url" />
+                        <label for="actuLienInstagram">Instagram : lien de la publication (facultatif)</label>
+                        <input type="url" id="actuLienInstagram" maxlength="500" placeholder="https://www.instagram.com/p/..." inputmode="url" />
+                        <label for="actuLienTiktok">TikTok : lien de la publication (facultatif)</label>
+                        <input type="url" id="actuLienTiktok" maxlength="500" placeholder="https://www.tiktok.com/@.../video/..." inputmode="url" />
+                        <label class="check"><input type="checkbox" id="actuEpingle" /> Épingler en haut (à la une)</label>
+                        <label class="check"><input type="checkbox" id="actuPublie" checked /> Publier tout de suite (sinon : brouillon)</label>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="actuSubmit">Publier</button>
+                            <button type="button" class="btn btn-ghost" id="actuCancel" hidden>Annuler la modification</button>
+                        </div>
+                    </form>
+
+                    <h2 class="sub-title">Vos publications <span class="total-views" id="totalViews"></span></h2>
+                    <div class="list" id="listActus"></div>
+                </section>
+
+                <!-- Galerie -->
+                <section class="panel" id="panel-galerie" hidden>
+                    <div class="view-head"><h1>Galerie</h1><p>Les photos de « Nos meilleurs moments » (accueil) et de la page Galerie. Les plus récentes s'affichent en premier.</p></div>
+                    <div class="card" id="galImport" hidden>
+                        <h2 class="card-title"><span data-ico="image" data-size="20"></span> Reprendre les photos actuelles du site</h2>
+                        <p class="muted-text">Votre site affiche aujourd'hui 24 photos écrites à la main. Importez-les en un clic pour pouvoir les réordonner, les masquer et les supprimer depuis l'admin. Les photos actuelles sont conservées.</p>
+                        <div class="form-actions"><button type="button" class="btn btn-primary" id="galImportBtn">Importer les 24 photos</button></div>
+                    </div>
+                    <form class="card form" id="galForm">
+                        <h2 class="card-title">Ajouter des photos</h2>
+                        <label for="galFiles">Photos (vous pouvez en choisir plusieurs d'un coup, 20 au maximum)</label>
+                        <input type="file" id="galFiles" accept="image/*" multiple />
+                        <div class="gal-previews" id="galPreviews"></div>
+                        <label class="check"><input type="checkbox" id="galPublic" checked /> Afficher sur le site</label>
+                        <p class="muted-text" id="galEtat" hidden></p>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="galSubmit">Ajouter</button>
+                        </div>
+                    </form>
+                    <h2 class="sub-title">Vos photos <span class="total-views" id="galTotal"></span></h2>
+                    <div class="list" id="listGalerie"></div>
+                </section>
+
+                <!-- Partenaires -->
+                <section class="panel" id="panel-partenaires" hidden>
+                    <div class="view-head"><h1>Partenaires</h1><p>Les logos de vos partenaires et sponsors, affichés sur la page Partenaires et dans « À propos ».</p></div>
+                    <div class="card" id="parImport" hidden>
+                        <h2 class="card-title"><span data-ico="heart" data-size="20"></span> Reprendre les partenaires actuels du site</h2>
+                        <p class="muted-text">Votre site affiche aujourd'hui 10 partenaires écrits à la main. Importez-les en un clic pour pouvoir les modifier, les réordonner et les masquer depuis l'admin. Leurs logos actuels sont conservés.</p>
+                        <div class="form-actions"><button type="button" class="btn btn-primary" id="parImportBtn">Importer les 10 partenaires</button></div>
+                    </div>
+                    <form class="card form" id="parForm">
+                        <h2 class="card-title" id="parFormTitle">Ajouter un partenaire</h2>
+                        <label for="parNom">Nom</label>
+                        <input type="text" id="parNom" maxlength="80" placeholder="Ex : Africell" required />
+                        <label for="parLien">Site web (facultatif : le logo deviendra cliquable)</label>
+                        <input type="text" id="parLien" maxlength="200" inputmode="url" placeholder="Ex : https://www.africell.cd" />
+                        <label for="parLogo">Logo</label>
+                        <input type="file" id="parLogo" accept="image/*" />
+                        <div class="img-preview img-preview-logo" id="parPreviewBox" hidden>
+                            <img id="parPreview" alt="Aperçu" />
+                            <button type="button" class="btn btn-ghost btn-sm" id="parLogoRemove">Retirer le logo</button>
+                        </div>
+                        <label class="check"><input type="checkbox" id="parPublic" checked /> Afficher sur le site</label>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="parSubmit">Ajouter</button>
+                            <button type="button" class="btn btn-ghost" id="parCancel" hidden>Annuler la modification</button>
+                        </div>
+                    </form>
+                    <h2 class="sub-title">Vos partenaires</h2>
+                    <div class="list" id="listPartenaires"></div>
+                </section>
+
+                <!-- Humoristes -->
+                <section class="panel" id="panel-humoristes" hidden>
+                    <div class="view-head"><h1>Humoristes</h1><p>La fiche de chaque artiste : photo, nom et rôle. Ils s'affichent sur la page Humoristes et sur l'accueil.</p></div>
+                    <div class="card" id="humImport" hidden>
+                        <h2 class="card-title"><span data-ico="users" data-size="20"></span> Reprendre les humoristes actuels du site</h2>
+                        <p class="muted-text">Votre site affiche aujourd'hui 6 humoristes écrits à la main. Importez-les ici en un clic pour pouvoir les modifier, les réordonner et les masquer depuis l'admin. Leurs photos actuelles sont conservées.</p>
+                        <div class="form-actions"><button type="button" class="btn btn-primary" id="humImportBtn">Importer les 6 humoristes</button></div>
+                    </div>
+                    <form class="card form" id="humForm">
+                        <h2 class="card-title" id="humFormTitle">Ajouter un humoriste</h2>
+                        <label for="humNom">Nom</label>
+                        <input type="text" id="humNom" maxlength="80" placeholder="Ex : Francky Sengha" required />
+                        <label for="humRole">Rôle</label>
+                        <input type="text" id="humRole" maxlength="60" value="Humoriste" />
+                        <label for="humPhoto">Photo (portrait conseillé)</label>
+                        <input type="file" id="humPhoto" accept="image/*" />
+                        <div class="img-preview" id="humPreviewBox" hidden>
+                            <img id="humPreview" alt="Aperçu" />
+                            <button type="button" class="btn btn-ghost btn-sm" id="humPhotoRemove">Retirer la photo</button>
+                        </div>
+                        <label class="check"><input type="checkbox" id="humPublic" checked /> Afficher sur le site</label>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="humSubmit">Ajouter</button>
+                            <button type="button" class="btn btn-ghost" id="humCancel" hidden>Annuler la modification</button>
+                        </div>
+                    </form>
+                    <h2 class="sub-title">Vos humoristes</h2>
+                    <div class="list" id="listHumoristes"></div>
+                </section>
+
+                <!-- Événements -->
+                <section class="panel" id="panel-evenements" hidden>
+                    <div class="view-head"><h1>Événements</h1><p>Vos spectacles et soirées. Ceux dont la billetterie est ouverte apparaissent dans le générateur de billets.</p></div>
+                    <form class="card form" id="evForm">
+                        <h2 class="card-title" id="evFormTitle">Ajouter un événement</h2>
+                        <label for="evTitre">Titre</label>
+                        <input type="text" id="evTitre" maxlength="100" placeholder="Ex : Soirée Punguza Stress" required />
+                        <div class="row2">
+                            <div><label for="evDate">Date</label><input type="date" id="evDate" required /></div>
+                            <div><label for="evHeure">Heure</label><input type="time" id="evHeure" /></div>
+                        </div>
+                        <label for="evLieu">Lieu</label>
+                        <input type="text" id="evLieu" maxlength="100" placeholder="Ex : Goma" required />
+                        <label for="evDesc">Description (facultatif)</label>
+                        <textarea id="evDesc" rows="3" maxlength="1000"></textarea>
+                        <label class="check"><input type="checkbox" id="evOuvert" checked /> Billetterie ouverte</label>
+                        <label class="check"><input type="checkbox" id="evPublic" /> Afficher sur le site public (page Événements)</label>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="evSubmit">Ajouter</button>
+                            <button type="button" class="btn btn-ghost" id="evCancel" hidden>Annuler la modification</button>
+                        </div>
+                    </form>
+                    <h2 class="sub-title">Vos événements</h2>
+                    <div class="list" id="listEvenements"></div>
+                </section>
+
+                <!-- Réservations (billets émis) -->
+                <section class="panel" id="panel-reservations" hidden>
+                    <div class="view-head"><h1>Réservations</h1><p>Les demandes reçues du site, puis tous les billets émis avec leurs ventes.</p></div>
+                    <h2 class="sub-title">Demandes en attente</h2>
+                    <div class="list" id="listDemandes"></div>
+                    <h2 class="sub-title">Billets émis</h2>
+                    <div class="stats stats-3" id="resaStats"></div>
+                    <div class="resa-tools">
+                        <div class="input-wrap">
+                            <span class="input-ico" data-ico="search" data-size="18"></span>
+                            <input type="search" id="resaSearch" placeholder="Nom, téléphone, événement ou ID…" autocomplete="off" />
+                        </div>
+                        <a href="#/billets" class="btn btn-primary"><span data-ico="plus" data-size="18"></span> Nouveau billet</a>
+                    </div>
+                    <div class="list" id="listBillets"></div>
+                </section>
+
+                <!-- Billets (générateur) -->
+                <section class="panel" id="panel-billets" hidden>
+                    <div class="view-head"><h1>Billets</h1><p>Générez un billet signé : le QR code est signé sur le serveur, la clé n'apparaît jamais dans le navigateur.</p></div>
+                    <div class="billets-grid">
+                        <form class="card form" id="billetForm" autocomplete="off">
+                            <h2 class="card-title"><span data-ico="qr" data-size="20"></span> Informations du billet</h2>
+                            <p class="empty" id="bkDemandeNote" hidden></p>
+                            <label for="bkNom">Nom complet</label>
+                            <input type="text" id="bkNom" maxlength="80" placeholder="Ex : Amani Jean" required />
+                            <label for="bkTel">Téléphone (pour WhatsApp)</label>
+                            <input type="text" id="bkTel" maxlength="30" inputmode="tel" placeholder="Ex : 0987 654 321" required />
+                            <label for="bkEvent">Événement</label>
+                            <input type="text" id="bkEvent" maxlength="100" list="bkEventList" placeholder="Ex : Soirée Punguza Stress" required />
+                            <datalist id="bkEventList"></datalist>
+                            <div class="row2">
+                                <div><label for="bkDate">Date</label><input type="text" id="bkDate" maxlength="60" placeholder="Ex : 28 novembre 2026" required /></div>
+                                <div><label for="bkLieu">Lieu</label><input type="text" id="bkLieu" maxlength="100" placeholder="Ex : Goma" required /></div>
+                            </div>
+                            <div class="row2">
+                                <div><label for="bkMontant">Montant payé</label><input type="text" id="bkMontant" inputmode="decimal" maxlength="12" placeholder="Ex : 5" required /></div>
+                                <div><label for="bkDevise">Devise</label><select id="bkDevise"><option value="USD">Dollar ($)</option><option value="CDF">Franc congolais (FC)</option></select></div>
+                            </div>
+                            <p class="login-error" id="bkError" role="alert" hidden></p>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary" id="bkSubmit">Générer le billet</button></div>
+                        </form>
+
+                        <div class="ticket-preview-box">
+                            <p class="ticket-placeholder" id="bkPlaceholder">Remplissez le formulaire puis cliquez sur « Générer le billet » : l'aperçu apparaît ici.</p>
+                            <div class="bp-wrap" id="ticketCard"></div>
+                            <div class="ticket-actions" id="ticketActions" hidden>
+                                <button type="button" class="btn btn-ghost" id="dlBtn">Télécharger (PNG)</button>
+                                <button type="button" class="btn btn-ghost" id="copyBtn">Copier le lien</button>
+                                <button type="button" class="btn btn-ok" id="waBtn">Envoyer sur WhatsApp</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Paramètres -->
+                <section class="panel" id="panel-parametres" hidden>
+                    <div class="view-head"><h1>Paramètres</h1><p>Votre compte et la sécurité de la session.</p></div>
+                    <div class="card settings">
+                        <div class="set-row"><span>Compte connecté</span><strong id="setEmail">—</strong></div>
+                        <div class="set-row"><span>Déconnexion automatique</span><strong>après 30 minutes d'inactivité</strong></div>
+                        <div class="set-row"><span>Session</span><strong>fermée avec l'onglet</strong></div>
+                        <div class="set-row"><span>Protection</span><strong>blocage 5 minutes après 5 essais ratés</strong></div>
+                        <div class="form-actions">
+                            <a href="index.html" class="btn btn-ghost" target="_blank" rel="noopener">Voir le site</a>
+                            <button type="button" class="btn btn-danger" id="logoutBtn2">Se déconnecter</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modules à venir : générés par admin.js (panel-evenements, -humoristes, -galerie, -partenaires, -reservations, -billets) -->
+            </div>
+
+            <footer class="app-foot">© <span id="footYear">2026</span> Ndosho Comédie Club. Tous droits réservés.</footer>
+        </div>
     </div>
 
+    <script src="js/billet-ui.js"></script>
     <script type="module" src="js/admin.js"></script>
 </body>
 

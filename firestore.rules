@@ -10,7 +10,10 @@ rules_version = '2';
 //    publiées, témoignages approuvés) ;
 //  - seul le compte admin (son email, dans isAdmin) peut
 //    tout lire / modifier / supprimer ;
-//  - le public peut seulement ajouter +1 au compteur de vues.
+//  - le public peut seulement ajouter +1 au compteur de vues ;
+//  - les billets (collection "billets") ne sont lisibles et modifiables
+//    que par l'admin : ils sont créés par la fonction Vercel /api/billet
+//    avec le jeton de connexion de l'admin.
 // ============================================================
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -64,6 +67,47 @@ service cloud.firestore {
         || (resource.data.publie == true
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
             && request.resource.data.views == resource.data.views + 1);
+    }
+
+    // Demandes de réservation (privées : nom + téléphone) — le public peut seulement envoyer
+    match /reservations/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nom','tel','categorie','statut','createdAt'])
+        && txt(request.resource.data.nom, 2, 80)
+        && txt(request.resource.data.tel, 5, 30)
+        && request.resource.data.categorie in ['Standard','VIP','VVIP']
+        && request.resource.data.statut == 'en_attente'
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Billets émis (privés : nom + téléphone des clients)
+    match /billets/{id} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    // Événements : gérés depuis l'admin ; le public ne lit que ceux marqués « public »
+    // (la page evenements.html demande where("public", "==", true))
+    match /evenements/{id} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Humoristes : gérés depuis l'admin ; le public ne lit que ceux marqués « public »
+    match /humoristes/{id} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Partenaires : gérés depuis l'admin ; le public ne lit que ceux marqués « public »
+    match /partenaires/{id} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Galerie : photos gérées depuis l'admin ; le public ne lit que celles marquées « public »
+    match /galerie/{id} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     // Tout le reste est interdit

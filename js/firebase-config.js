@@ -4,15 +4,15 @@
 // secrets : la sécurité vient des règles Firestore (firestore.rules)
 // et de la connexion admin.
 // Tant que "VOTRE_" est présent, le site reste en mode démo :
-// exemples affichés et formulaires qui basculent sur WhatsApp.
+// formulaires qui basculent sur WhatsApp, aucun contenu dynamique.
 // ============================================================
 export const firebaseConfig = {
-  apiKey: "VOTRE_API_KEY",
-  authDomain: "VOTRE_PROJET.firebaseapp.com",
-  projectId: "VOTRE_PROJECT_ID",
-  storageBucket: "VOTRE_PROJET.appspot.com",
-  messagingSenderId: "VOTRE_SENDER_ID",
-  appId: "VOTRE_APP_ID",
+  apiKey: "AIzaSyBGq0OXBzwY5MTLxq8yVbjTOlMxz52UbDE",
+  authDomain: "ndosho-comedie-club.firebaseapp.com",
+  projectId: "ndosho-comedie-club",
+  storageBucket: "ndosho-comedie-club.firebasestorage.app",
+  messagingSenderId: "312782908800",
+  appId: "1:312782908800:web:0ee9529a06129c6c8d6565",
 };
 
 // Email du compte admin (le même que dans firestore.rules > isAdmin).

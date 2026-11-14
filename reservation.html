@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Réservations</title>
-    <meta name="robots" content="noindex" />
+    <title>Réserver ma place — Festival Punguza Stress, 2e édition</title>
     <link rel="stylesheet" href="css/reservation.css" />
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/menu-mobile.css">
+    <link rel="stylesheet" href="css/billetterie.css">
     <link rel="icon" href="./logo/ndoshologo.png">
     <meta name="description"
-        content="Les réservations du Ndosho Comédie Club ne sont pas ouvertes pour le moment." />
+        content="Réservez votre place pour le Festival Punguza Stress, 2e édition, le dimanche 24 janvier 2027 à Goma : Standard, VIP ou VVIP." />
     <link rel="canonical" href="https://ndosho-comedie-club.vercel.app/reservation.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ndosho Comédie Club" />
-    <meta property="og:title" content="Réservations — Ndosho Comédie Club" />
+    <meta property="og:title" content="Réserver ma place — Festival Punguza Stress, 2e édition" />
     <meta property="og:description"
-        content="Les réservations du Ndosho Comédie Club ne sont pas ouvertes pour le moment." />
+        content="Réservez votre place pour le Festival Punguza Stress, 2e édition, le dimanche 24 janvier 2027 à Goma : Standard, VIP ou VVIP." />
     <meta property="og:url" content="https://ndosho-comedie-club.vercel.app/reservation.html" />
     <meta property="og:image" content="https://ndosho-comedie-club.vercel.app/images/og-image.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -26,11 +26,12 @@
     <meta property="og:image:alt" content="Ndosho Comédie Club : des humoristes sur scène à Goma" />
     <meta property="og:locale" content="fr_FR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Réservations — Ndosho Comédie Club" />
+    <meta name="twitter:title" content="Réserver ma place — Festival Punguza Stress, 2e édition" />
     <meta name="twitter:description"
-        content="Les réservations du Ndosho Comédie Club ne sont pas ouvertes pour le moment." />
+        content="Réservez votre place pour le Festival Punguza Stress, 2e édition, le dimanche 24 janvier 2027 à Goma : Standard, VIP ou VVIP." />
     <meta name="twitter:image" content="https://ndosho-comedie-club.vercel.app/images/og-image.jpg" />
 
+    <link rel="stylesheet" href="css/boutons.css" />
 </head>
 
 <body>
@@ -74,21 +75,63 @@
     <!-- ══ HERO ══════════════════════════════════════════════ -->
     <section class="reserv-hero">
         <span class="label-orange">Billetterie</span>
-        <h1>Réservations</h1>
-        <p>La billetterie ouvrira avec le prochain événement.</p>
+        <h1>Réserver ma place</h1>
+        <p>Festival <b>Punguza Stress</b>, 2e édition<br>Dimanche 24 janvier 2027, à Goma</p>
     </section>
 
-    <!-- ══ RÉSERVATIONS FERMÉES ══════════════════════════════ -->
+    <!-- ══ FORMULAIRE DE RÉSERVATION ═════════════════════════ -->
     <section class="reserv-form-section">
         <div class="section-header">
-            <span class="label-orange">Information</span>
-            <h2 style="color: #faf3d9;">Pas de réservation pour le moment</h2>
+            <span class="label-orange">Étape 1</span>
+            <h2>Votre demande</h2>
             <div class="underline"></div>
-            <p>Aucun événement n'est ouvert à la réservation actuellement. Les prochaines dates seront annoncées sur nos réseaux sociaux.</p>
+            <p>Votre nom, votre numéro et la place que vous voulez. On vous répond sur WhatsApp pour finir ensemble.</p>
         </div>
-        <div style="text-align: center; margin-top: 24px;">
-            <a href="evenements.html" class="btn-orange">Voir l'agenda</a>
+
+        <form class="resa-form" id="resaForm" autocomplete="off">
+            <label for="rsNom">Nom complet</label>
+            <input type="text" id="rsNom" maxlength="80" placeholder="Ex : Amani Jean" required />
+
+            <label for="rsTel">Téléphone (WhatsApp)</label>
+            <input type="tel" id="rsTel" maxlength="30" inputmode="tel" placeholder="Ex : +243 9xx xxx xxx" required />
+
+            <span class="resa-label">Catégorie de billet</span>
+            <div class="resa-cats" role="radiogroup" aria-label="Catégorie de billet">
+                <label class="resa-cat"><input type="radio" name="rsCat" value="Standard" checked /><span>Standard</span></label>
+                <label class="resa-cat"><input type="radio" name="rsCat" value="VIP" /><span>VIP</span></label>
+                <label class="resa-cat"><input type="radio" name="rsCat" value="VVIP" /><span>VVIP</span></label>
+            </div>
+
+            <div class="hp" aria-hidden="true"><input type="text" id="rsWebsite" tabindex="-1" autocomplete="off" /></div>
+
+            <p class="resa-error" id="rsError" hidden></p>
+            <button type="submit" class="btn-orange resa-submit" id="rsSubmit">Envoyer ma demande sur WhatsApp</button>
+        </form>
+
+        <div class="resa-ok" id="rsOk" hidden>
+            <h3>C'est noté !</h3>
+            <p>Si WhatsApp ne s'est pas ouvert tout seul, touchez le bouton ci-dessous pour nous écrire.</p>
+            <a class="btn-orange" id="rsWaLink" href="#" target="_blank" rel="noopener">Ouvrir WhatsApp</a>
         </div>
+    </section>
+
+    <!-- ══ MOYENS DE PAIEMENT ════════════════════════════════ -->
+    <section class="pay-section" aria-label="Moyens de paiement">
+        <div class="section-header">
+            <span class="label-orange">Étape 2</span>
+            <h2>Payer par mobile money</h2>
+            <div class="underline"></div>
+            <p>Vous payez avec nous sur WhatsApp, avec le service qui vous arrange.</p>
+        </div>
+        <div class="pay-slider-wrap">
+            <div class="pay-slider" id="paySlider">
+                <figure class="pay-card"><img src="./images/paiement/afrimoney.jpg" width="640" height="237" loading="lazy" alt="Afrimoney" /></figure>
+                <figure class="pay-card"><img src="./images/paiement/airtel-money.jpg" width="640" height="237" loading="lazy" alt="Airtel Money" /></figure>
+                <figure class="pay-card"><img src="./images/paiement/orange-money.jpg" width="640" height="237" loading="lazy" alt="Orange Money" /></figure>
+                <figure class="pay-card"><img src="./images/paiement/m-pesa.jpg" width="640" height="237" loading="lazy" alt="M-Pesa" /></figure>
+            </div>
+        </div>
+        <p class="pay-note">Dès que votre paiement est confirmé, on vous envoie votre billet. Vous pouvez le revoir ou le télécharger quand vous voulez.</p>
     </section>
 
     <!-- ══ FOOTER ════════════════════════════════════════════ -->
@@ -169,7 +212,10 @@
     </footer>
 
 
+    <script src="js/reservation-statut.js"></script>
     <script src="js/index.js"></script>
-    </body>
+    <script type="module" src="js/reservation.js"></script>
+        <script type="module" src="js/nouveautes.js"></script>
+</body>
 
 </html>

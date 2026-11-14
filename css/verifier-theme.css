@@ -1,0 +1,33 @@
+/* ============================================================
+   Vérificateur de billets — thème bleu nuit (même famille que l'espace admin)
+   Chargé après reservation.css : il ne fait que surcharger l'apparence.
+   ============================================================ */
+body { background: #0a1438; }
+.verif-page { background: radial-gradient(1000px 500px at 50% -10%, #1f3a8a 0%, #0a1438 65%); font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; }
+.verif-header .label-orange { background: rgba(96, 165, 250, 0.16); color: #bfdbfe; border: 1px solid rgba(147, 197, 253, 0.3); border-radius: 999px; padding: 5px 14px; font-size: 0.7rem; letter-spacing: 0.14em; }
+.verif-header h1 { color: #fff; text-transform: none; letter-spacing: -0.01em; }
+.verif-header p { color: #aab4d6; }
+
+.verif-modes { background: rgba(255, 255, 255, 0.06); border-radius: 999px; padding: 4px; }
+.verif-mode-btn { background: none; border: 0; border-radius: 999px; color: #cbd5f5; text-transform: none; letter-spacing: 0; font-size: 0.85rem; font-weight: 700; padding: 9px 18px; }
+.verif-mode-btn.active { background: #2563eb; color: #fff; box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4); }
+
+.verif-scanner { border-radius: 20px; box-shadow: 0 20px 50px rgba(2, 8, 30, 0.55); border: 1px solid rgba(147, 197, 253, 0.2); }
+.verif-scan-frame { border: 3px solid #60a5fa; border-radius: 18px; box-shadow: 0 0 0 999px rgba(5, 12, 40, 0.5); }
+.verif-scan-line { background: #60a5fa; box-shadow: 0 0 10px 2px rgba(96, 165, 250, 0.8); }
+.verif-upload { background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(147, 197, 253, 0.35); border-radius: 20px; color: #cbd5f5; }
+.verif-upload label { background: #2563eb; color: #fff; border-radius: 999px; text-transform: none; letter-spacing: 0; font-size: 0.9rem; box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4); }
+.verif-status { color: #aab4d6; }
+
+.verif-result { background: #fff; border-radius: 22px; box-shadow: 0 24px 60px rgba(2, 8, 30, 0.5); }
+.verif-result h2 { text-transform: none; color: #0f1d4f; }
+.verif-result.valid h2 { color: #15803d; }
+.verif-result.invalid h2 { color: #b91c1c; }
+.verif-result-msg { color: #475569; }
+.verif-detail-row { background: #f3f6fc; border-radius: 10px; }
+.verif-detail-row span:first-child { color: #64748b; }
+.verif-detail-row span:last-child { color: #0f1d4f; }
+.verif-reset-btn { background: #2563eb; color: #fff; border-radius: 12px; text-transform: none; letter-spacing: 0; font-size: 0.95rem; }
+.verif-reset-btn:hover { background: #1d4ed8; }
+.verif-entry-btn { background: #16a34a; margin-bottom: 8px; }
+.verif-entry-btn:hover { background: #15803d; }

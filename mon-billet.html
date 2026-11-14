@@ -15,13 +15,27 @@
         })();
     </script>
     <title>Mon billet</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&family=Permanent+Marker&display=swap" />
     <link rel="stylesheet" href="css/reservation.css" />
+    <link rel="stylesheet" href="css/billet.css" />
     <link rel="icon" href="./logo/ndoshologo.png">
     <meta name="robots" content="noindex, nofollow" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        .ticket-card {
-            width: 600px;
+        .bp-wrap {
+            margin: 0 auto;
+        }
+
+        #billetOk {
+            width: 100%;
+            max-width: 880px;
+            min-width: 0;
+        }
+
+        #billetOk p {
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .billet-page {
@@ -30,8 +44,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 40px 12px;
             gap: 24px;
+            width: 100%;
         }
 
         .billet-page h1 {
@@ -102,53 +117,7 @@
             <h1>Votre billet numérique</h1>
             <p style="text-align: center;">Présentez ce billet (à l'écran ou imprimé) à l'entrée de l'événement.</p>
             <br>
-            <div class="ticket-card show" id="ticketCard">
-                <div class="ticket-main">
-                    <div class="ticket-head-row">
-                        <div class="ticket-brand-block">
-                            <span class="ticket-brand-line">NDOSHO</span>
-                            <span class="ticket-brand-line">COMÉDIE</span>
-                            <span class="ticket-brand-line accent">CLUB</span>
-                        </div>
-                        <div class="ticket-meta-block">
-                            <span class="ticket-tag" id="tkOutEvent">Billet</span>
-                            <span class="ticket-meta-date" id="tkOutDate">—</span>
-                            <span class="ticket-meta-lieu" id="tkOutLieu">—</span>
-                        </div>
-                    </div>
-                    <div class="ticket-boxes">
-                        <div class="ticket-box">
-                            <span class="box-label">Nom</span>
-                            <span class="box-value" id="tkOutNom">—</span>
-                        </div>
-                        <div class="ticket-box">
-                            <span class="box-label">Téléphone</span>
-                            <span class="box-value" id="tkOutTel">—</span>
-                        </div>
-                    </div>
-                    <div class="ticket-boxes">
-                        <div class="ticket-box">
-                            <span class="box-label">Montant</span>
-                            <span class="box-value" id="tkOutMontant">—</span>
-                        </div>
-                        <div class="ticket-box">
-                            <span class="box-label">ID billet</span>
-                            <span class="box-value" id="tkOutId">—</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ticket-side">
-                    <span class="ticket-admit">ENTRÉE</span>
-                    <div class="ticket-qr" id="tkQr">
-                        <img id="tkQrImg" src="" alt="QR code du billet" width="128" height="128" />
-                    </div>
-                    <span class="ticket-side-id" id="tkOutIdSide">—</span>
-                </div>
-                <div class="ticket-foot">
-                    <p>Ce billet est unique et nominatif. Toute duplication ou revente est interdite et annule sa
-                        validité. Présentez-le (numérique ou imprimé) à l'entrée.</p>
-                </div>
-            </div>
+            <div class="bp-wrap show" id="ticketCard"></div>
 
             <div class="ticket-actions" style="justify-content:center; margin-top: 20px;">
                 <button class="btn-download" id="downloadBtn">Télécharger (PNG)</button>
@@ -162,6 +131,7 @@
         </div>
     </main>
 
+    <script src="js/billet-ui.js"></script>
     <script src="js/mon-billet.js"></script>
 </body>
 

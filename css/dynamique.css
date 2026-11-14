@@ -183,3 +183,25 @@ html { scroll-padding-top: 90px; }
 .avis-plus { color: var(--orange); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 8px; display: block; }
 .temoig-slider .avis--lecture, .actu-modal-body .avis { flex: none; width: auto; min-height: 0; cursor: default; border: none; padding: 8px 0 24px; box-shadow: none; transform: none; background: transparent; }
 .actu-modal-body .avis .av p { font-size: 1.05rem; }
+
+.temoig-vide { text-align: center; color: var(--gray); margin: 8px auto 24px; max-width: 520px; padding: 0 16px; }
+
+/* Témoignages : bouton lien (partager) à côté du × */
+.temoig-bar-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.temoig-share { display: inline-flex; align-items: center; justify-content: center; background: var(--orange); }
+.temoig-share:hover, .temoig-share:focus-visible { background: #d63a17; outline: none; }
+
+/* Actualités : icônes des réseaux (Facebook, Instagram, TikTok) — seulement ceux renseignés par l'admin */
+.actu-social { display: flex; flex-wrap: wrap; gap: 10px; }
+.actu-social-link {
+    width: 42px; height: 42px; border-radius: 50%; background: #fff; border: 1px solid rgba(20, 41, 92, 0.14);
+    display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.actu-social-link img { width: 24px; height: 24px; object-fit: contain; display: block; }
+.actu-social-link:hover, .actu-social-link:focus-visible { transform: translateY(-3px); border-color: var(--orange); outline: none; }
+.actu-social--carte { margin-top: 2px; }
+.actu-social--carte .actu-social-link { width: 34px; height: 34px; }
+.actu-social--carte .actu-social-link img { width: 19px; height: 19px; }
+.actu-social-bloc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(26, 26, 26, 0.12); }
+.actu-social-titre { margin: 0 0 10px; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); }
+.actu-filtres[hidden] { display: none; }

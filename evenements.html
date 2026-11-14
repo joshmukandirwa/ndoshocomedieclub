@@ -30,6 +30,7 @@
         content="Festival Punguza Stress, 2e édition : rendez-vous le dimanche 24 janvier 2027 à Goma. Retrouvez ici les prochains événements du Ndosho Comédie Club." />
     <meta name="twitter:image" content="https://ndosho-comedie-club.vercel.app/images/punguza-2027-og.jpg" />
 
+    <link rel="stylesheet" href="css/boutons.css" />
 </head>
 
 <body>
@@ -118,7 +119,7 @@
                 </ul>
 
                 <div class="countdown" id="countdown" data-target="2027-01-24T00:00:00+02:00" aria-live="off">
-                    <p class="countdown-label">Plus que quelques jours à patienter…</p>
+                    <p class="countdown-label">Le compte à rebours est lancé</p>
                     <div class="countdown-grid">
                         <div><b data-unit="days">--</b><span>Jours</span></div>
                         <div><b data-unit="hours">--</b><span>Heures</span></div>
@@ -127,21 +128,30 @@
                     </div>
                 </div>
 
-                <p class="featured-intro">Ça y est, c'est officiel&nbsp;!</p>
+                <p class="featured-intro">On est de retour&nbsp;!</p>
 
                 <p class="featured-desc">
-                    Le Festival Punguza Stress revient le <strong>dimanche 24 janvier 2027</strong>, chez nous à Goma. Après des mois d'attente, on a hâte de vous retrouver pour rire ensemble, passer un moment de vraie convivialité et rappeler que chez nous, la bonne humeur rassemble tout le monde.
+                    Le Festival Punguza Stress revient le <strong>dimanche 24 janvier 2027</strong>, chez nous à Goma. Ça fait des mois qu'on attend ce moment : on a hâte de vous retrouver pour rire ensemble et passer une belle journée entre amis, en famille, comme chez nous.
                 </p>
 
                 <div class="featured-mystery">
-                    <strong>Et le lieu alors&nbsp;?</strong>
-                    <p>On garde le secret encore un peu. Ce qu'on peut vous dire, c'est qu'il sera à la hauteur de la fête. On vous le dévoile très bientôt. Alors gardez la date et <b>haiko ata mbali&nbsp;!</b></p>
+                    <strong>Et le lieu&nbsp;?</strong>
+                    <p>C'est encore un secret ! Ce qu'on peut déjà vous dire : il sera à la hauteur de la fête. On vous le dévoile très bientôt, alors gardez la date et <b>haiko ata mbali&nbsp;!</b></p>
                 </div>
 
                 <div class="featured-actions">
                     <a href="https://www.facebook.com/profile.php?id=61591598038843" target="_blank" rel="noopener" class="btn-orange">Suivre la page Punguza Stress</a>
+                    <a href="reservation.html" class="btn-orange">Réserver ma place</a>
                 </div>
             </div>
+        </div>
+        <div class="evnt-more" id="evntMore" hidden>
+            <div class="section-header">
+                <span class="label-orange">Agenda</span>
+                <h2>Les autres rendez-vous</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="evnt-cards-grid" id="evntGrid"></div>
         </div>
         <p class="evnt-empty show">Rien d'autre au programme pour le moment. Suivez-nous sur nos réseaux sociaux pour connaître les prochaines dates.</p>
     </section>
@@ -224,8 +234,11 @@
     </footer>
 
 
+    <script src="js/reservation-statut.js"></script>
     <script src="js/index.js"></script>
     <script src="js/evenements.js"></script>
+    <script type="module" src="js/evenements-dynamiques.js"></script>
+    <script type="module" src="js/nouveautes.js"></script>
 </body>
 
 </html>

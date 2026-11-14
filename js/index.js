@@ -152,6 +152,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function autoLoop(strip, speed) {
     if (!strip || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var originals = Array.prototype.slice.call(strip.children);
+    // Peu d'éléments : tout tient à l'écran, inutile de les copier (sinon le même élément s'affiche deux fois)
+    if (strip.scrollWidth <= strip.clientWidth + 2) return;
     originals.forEach(function (el) {
       var clone = el.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
@@ -162,6 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var pos = 0;
     var paused = false;
     var resume = null;
+    var stopped = false;
+    strip.__stop = function () { stopped = true; };
 
     function period() {
       return strip.children[originals.length].offsetLeft - originals[0].offsetLeft;
@@ -180,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function tick() {
+      if (stopped) return;
       var p = period();
       if (!paused) {
         pos += speed;
