@@ -66,7 +66,7 @@ module.exports = async (req, res) => {
   var pageUrl = SITE + "/api/actualite?id=" + encodeURIComponent(id);
   var imgUrl = /^data:image\//.test(image)
     ? pageUrl + "&img=1"
-    : SITE + "/images/og-logo.png"; // pas d'image dans la publication : image du site
+    : SITE + "/images/og-image.jpg"; // pas d'image dans la publication : image du site
 
   var html =
     "<!doctype html><html lang=\"fr\"><head><meta charset=\"UTF-8\" />" +
