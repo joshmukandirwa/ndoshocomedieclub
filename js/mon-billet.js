@@ -69,6 +69,17 @@ if (!ticket || !ticket.nom || !ticket.ticketId) {
       '<p style="font-size:10px;color:#c0392b;padding:6px;max-width:100px;line-height:1.2;">QR indisponible (vérifiez votre connexion internet)</p>';
   });
 
+  // Un lien fabriqué à la main ne doit pas afficher un faux billet : la signature est contrôlée par le serveur.
+  // (Si le contrôle est impossible, par exemple hors connexion, le billet reste affiché.)
+  fetch("/api/verifier", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texte: qrText }) })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j && (j.statut === "invalide" || j.statut === "inconnu" || j.statut === "pas_un_billet")) {
+        billetOk.style.display = "none"; billetError.classList.add("show");
+      }
+    })
+    .catch(function () {});
+
   document.getElementById("downloadBtn").addEventListener("click", function () {
     if (typeof html2canvas === "undefined") {
       alert(

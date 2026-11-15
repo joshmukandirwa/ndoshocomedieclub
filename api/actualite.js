@@ -66,7 +66,7 @@ module.exports = async (req, res) => {
   var pageUrl = SITE + "/api/actualite?id=" + encodeURIComponent(id);
   var imgUrl = /^data:image\//.test(image)
     ? pageUrl + "&img=1"
-    : SITE + "/images/og-image.jpg"; // pas d'image dans la publication : image du site
+    : SITE + "/images/og-logo.png"; // pas d'image dans la publication : image du site
 
   var html =
     "<!doctype html><html lang=\"fr\"><head><meta charset=\"UTF-8\" />" +
@@ -79,7 +79,7 @@ module.exports = async (req, res) => {
     '<meta property="og:image" content="' + esc(imgUrl) + '" />' +
     '<meta property="og:image:secure_url" content="' + esc(imgUrl) + '" />' +
     '<meta property="og:url" content="' + esc(pageUrl) + '" />' +
-    '<meta name="twitter:card" content="summary_large_image" />' +
+    '<meta name="twitter:card" content="' + (/^data:image\//.test(image) ? 'summary_large_image' : 'summary') + '" />' +
     '<meta name="twitter:title" content="' + esc(titre) + '" />' +
     '<meta name="twitter:description" content="' + esc(desc) + '" />' +
     '<meta name="twitter:image" content="' + esc(imgUrl) + '" />' +

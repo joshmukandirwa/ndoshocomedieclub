@@ -1,0 +1,10 @@
+/* ÉQUIPE */
+Développeur web : Josué Mukandirwa
+Société : EbenJosh Tech & Services
+Contact : Joshmukandirwa@gmail.com
+Lieu : Goma, Nord-Kivu, RDC
+Page : https://ndosho-comedie-club.vercel.app/developpeur.html
+
+/* SITE */
+Site : Ndosho Comédie Club
+Technologies : HTML, CSS, JavaScript, Firebase, Vercel

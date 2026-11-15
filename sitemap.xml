@@ -41,4 +41,8 @@
     <loc>https://ndosho-comedie-club.vercel.app/actualites.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://ndosho-comedie-club.vercel.app/developpeur.html</loc>
+    <priority>0.5</priority>
+  </url>
 </urlset>

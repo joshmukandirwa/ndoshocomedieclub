@@ -350,6 +350,7 @@ header {
     .nav-links {
         display: none;
     }
+
     .menu-btn {
         display: flex;
     }
@@ -663,6 +664,7 @@ header {
     .festival-card {
         grid-template-columns: 1fr 1.2fr;
     }
+
     .festival-img {
         height: 100%;
     }
@@ -695,6 +697,3 @@ header {
 /* ============================================================
    SCROLL TO TOP
    ============================================================ */
-
-
-

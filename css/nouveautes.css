@@ -1,23 +1,79 @@
 /* Pastilles « nouveau » du menu */
 .nav-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-width: 22px; height: 22px; padding: 0 6px; margin-left: 10px; vertical-align: middle;
-    border-radius: 999px; background: #e11d2e; color: #fff;
-    font-size: 0.72rem; font-weight: 800; letter-spacing: 0; line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    margin-left: 10px;
+    vertical-align: middle;
+    border-radius: 999px;
+    background: #e11d2e;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1;
     box-shadow: 0 0 0 3px rgba(225, 29, 46, 0.25);
     animation: nouv-pop 0.45s cubic-bezier(.2, 1.4, .4, 1) both;
 }
-.nav-links .nav-badge { min-width: 18px; height: 18px; font-size: 0.64rem; margin-left: 6px; position: relative; top: -1px; }
-.menu-btn { position: relative; }
+
+.nav-links .nav-badge {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.64rem;
+    margin-left: 6px;
+    position: relative;
+    top: -1px;
+}
+
+.menu-btn {
+    position: relative;
+}
+
 .menu-badge {
-    position: absolute; top: -7px; right: -7px; z-index: 2;
-    min-width: 22px; height: 22px; padding: 0 6px; box-sizing: border-box;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 999px; background: #e11d2e; color: #fff; border: 2px solid #fff;
-    font-size: 0.7rem; font-weight: 800; line-height: 1; letter-spacing: 0;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    z-index: 2;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #e11d2e;
+    color: #fff;
+    border: 2px solid #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
     animation: nouv-pop 0.45s cubic-bezier(.2, 1.4, .4, 1) both;
     pointer-events: none;
 }
-.menu-btn.active .menu-badge { display: none; }
-@keyframes nouv-pop { from { transform: scale(0); } to { transform: scale(1); } }
-@media (prefers-reduced-motion: reduce) { .nav-badge, .menu-badge { animation: none; } }
+
+.menu-btn.active .menu-badge {
+    display: none;
+}
+
+@keyframes nouv-pop {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .nav-badge,
+    .menu-badge {
+        animation: none;
+    }
+}

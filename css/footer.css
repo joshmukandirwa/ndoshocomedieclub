@@ -179,8 +179,7 @@ footer h4::after {
     color: var(--cream);
 }
 
-@media (min-width: 640px) {
-}
+@media (min-width: 640px) {}
 
 @media (min-width: 850px) {
     .foot-inner {
@@ -248,4 +247,15 @@ footer h4::after {
 .foot-credit-links svg {
     width: 14px;
     height: 14px;
+}
+
+a.foot-credit-name {
+    color: inherit;
+    text-decoration: none;
+}
+
+a.foot-credit-name:hover,
+a.foot-credit-name:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }

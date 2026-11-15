@@ -2,7 +2,7 @@
 // Le contenu statique de la page (affiche à la une, compte à rebours) reste tel quel ; ceci ajoute les autres
 // rendez-vous. S'il n'y en a aucun (ou si Firebase est indisponible), le message « Rien d'autre au programme » reste.
 import { isConfigured, db, collection, getDocs, query, where, limit } from "./firebase.js";
-import { el, MOIS } from "./utils.js";
+import { el, MOIS, RESEAUX, lienReseau } from "./utils.js";
 
 const ABR = ["JANV", "FÉVR", "MARS", "AVR", "MAI", "JUIN", "JUIL", "AOÛT", "SEPT", "OCT", "NOV", "DÉC"];
 
@@ -65,6 +65,18 @@ function carte(e) {
   body.appendChild(el("p", null, e.lieu));
   if (e.description) body.appendChild(el("p", null, e.description.length > 160 ? e.description.slice(0, 157) + "…" : e.description));
   c.appendChild(body);
+  // Icônes Facebook / Instagram / TikTok : seulement celles dont l'admin a saisi un lien
+  let box = null;
+  RESEAUX.forEach(function (r) {
+    const href = lienReseau(e[r.cle], r);
+    if (!href) return;
+    if (!box) box = el("div", "evnt-social");
+    const a = el("a", "evnt-social-link"); a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.setAttribute("aria-label", "Voir l'événement sur " + r.nom); a.title = r.nom;
+    const im = el("img"); im.src = r.img; im.alt = r.nom; im.loading = "lazy";
+    a.appendChild(im); box.appendChild(a);
+  });
+  if (box) { const bar = el("div", "evnt-card-social"); bar.appendChild(el("span", "evnt-social-titre", "Suivre sur")); bar.appendChild(box); c.appendChild(bar); }
   // La billetterie en ligne (reservation.html) ne concerne que le Festival Punguza Stress.
   if (e.ouvert && /punguza/i.test(e.titre || "")) {
     const foot = el("div", "evnt-card-foot"), a = el("a", null, "Réserver ma place");

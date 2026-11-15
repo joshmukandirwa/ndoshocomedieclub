@@ -350,6 +350,7 @@ header {
     .nav-links {
         display: none;
     }
+
     .menu-btn {
         display: flex;
     }
@@ -883,9 +884,11 @@ header {
     .formulaire {
         flex-direction: row;
     }
+
     .formulaire input {
         flex: 1;
     }
+
     .formulaire button {
         flex-shrink: 0;
         padding: 16px 30px;
@@ -980,6 +983,7 @@ header {
     .featured-card {
         grid-template-columns: 1fr 1.3fr;
     }
+
     .featured-img {
         height: 100%;
     }

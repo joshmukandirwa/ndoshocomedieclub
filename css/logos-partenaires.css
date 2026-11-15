@@ -90,22 +90,28 @@
     .mini-logos {
         gap: 6px 12px;
     }
+
     .mini-logos li {
         height: 24px;
     }
+
     .mini-logos img {
         height: 20px;
         max-width: 52px;
     }
+
     .fest-sponsors {
         padding: 18px 10px 20px;
     }
+
     .fest-sponsors .mini-logos {
         gap: 10px 16px;
     }
+
     .fest-sponsors .mini-logos li {
         height: 30px;
     }
+
     .fest-sponsors .mini-logos img {
         height: 26px;
         max-width: 64px;

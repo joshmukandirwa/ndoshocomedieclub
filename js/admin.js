@@ -752,6 +752,14 @@ if (!isConfigured) {
     e.preventDefault();
     const data = { titre: $("evTitre").value.trim().slice(0, 100), dateISO: $("evDate").value, heure: $("evHeure").value, lieu: $("evLieu").value.trim().slice(0, 100), description: $("evDesc").value.trim().slice(0, 1000), ouvert: $("evOuvert").checked, public: $("evPublic").checked };
     if (!data.titre || !data.dateISO || !data.lieu) return;
+    // Liens de l'événement sur les réseaux : seuls ceux remplis (et valides) seront affichés sur le site
+    for (const r of RESEAUX) {
+      const champ = $("ev" + r.cle.charAt(0).toUpperCase() + r.cle.slice(1));
+      const brut = champ.value.trim();
+      const propre = lienReseau(brut, r);
+      if (brut && !propre) { alert("Le lien " + r.nom + " n'est pas valide. Collez l'adresse de la publication, par exemple : " + champ.placeholder); champ.focus(); return; }
+      data[r.cle] = propre;
+    }
     $("evSubmit").disabled = true;
     try {
       if (evEditId) await updateDoc(doc(db, "evenements", evEditId), data);
@@ -779,6 +787,7 @@ if (!isConfigured) {
       if (passe) pills.appendChild(el("span", "pill draft", "Passé"));
       else pills.appendChild(el("span", "pill " + (ev.ouvert ? "ok" : "draft"), ev.ouvert ? "Billetterie ouverte" : "Billetterie fermée"));
       if (ev.public) { pills.appendChild(document.createTextNode(" ")); pills.appendChild(el("span", "pill pin", "Sur le site")); }
+      RESEAUX.forEach(function (r) { if (lienReseau(ev[r.cle], r)) { pills.appendChild(document.createTextNode(" ")); pills.appendChild(el("span", "pill", r.nom)); } });
       head.appendChild(pills); it.appendChild(head);
       const vendus = billets.filter(function (b) { return b.eventName === ev.titre; }).length;
       it.appendChild(el("p", "item-text", (ev.description ? ev.description + "\n" : "") + pluriel(vendus, "billet émis", "billets émis")));
@@ -786,6 +795,7 @@ if (!isConfigured) {
       ac.appendChild(btn("Modifier", "btn-ghost", function () {
         evEditId = ev.id; $("evTitre").value = ev.titre; $("evDate").value = ev.dateISO; $("evHeure").value = ev.heure || ""; $("evLieu").value = ev.lieu;
         $("evDesc").value = ev.description || ""; $("evOuvert").checked = !!ev.ouvert; $("evPublic").checked = !!ev.public;
+        RESEAUX.forEach(function (r) { $("ev" + r.cle.charAt(0).toUpperCase() + r.cle.slice(1)).value = ev[r.cle] || ""; });
         $("evSubmit").textContent = "Enregistrer"; $("evCancel").hidden = false; $("evFormTitle").textContent = "Modifier l'événement";
         $("evForm").scrollIntoView({ behavior: "smooth", block: "start" }); return Promise.resolve();
       }));
@@ -1087,3 +1097,16 @@ if (!isConfigured) {
     });
   }
 }
+
+// Repère visuel (jj/mm/aaaa, hh:mm) sur les champs date/heure vides
+(function () {
+  function maj(i) { i.classList.toggle("vide", !i.value); }
+  function init() {
+    document.querySelectorAll('input[type="date"], input[type="time"]').forEach(function (i) {
+      maj(i); i.addEventListener("input", function () { maj(i); }); i.addEventListener("change", function () { maj(i); });
+    });
+    document.addEventListener("reset", function () { setTimeout(function () { document.querySelectorAll('input[type="date"], input[type="time"]').forEach(maj); }, 0); }, true);
+    document.addEventListener("click", function () { setTimeout(function () { document.querySelectorAll('input[type="date"], input[type="time"]').forEach(maj); }, 50); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();

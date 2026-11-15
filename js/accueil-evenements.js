@@ -1,7 +1,7 @@
 // Accueil : ajoute à la liste « Agenda » les prochains événements créés dans l'admin
 // (Événements → « Afficher sur le site public »). L'événement écrit à la main reste en premier.
 import { isConfigured, db, collection, getDocs, query, where, limit } from "./firebase.js";
-import { el } from "./utils.js";
+import { el, RESEAUX, lienReseau } from "./utils.js";
 
 const ABR = ["JANV", "FÉVR", "MARS", "AVR", "MAI", "JUIN", "JUIL", "AOÛT", "SEPT", "OCT", "NOV", "DÉC"];
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
@@ -33,6 +33,18 @@ function delai(d) {
       const info = el("div", "event-info"); info.appendChild(el("p", "event-soon", delai(d)));
       const h = el("h3"), a = el("a", null, e.titre); a.href = "evenements.html#" + slugify(e.titre); h.appendChild(a); info.appendChild(h);
       info.appendChild(el("p", null, d.getDate() + " " + MOIS[d.getMonth()] + " " + d.getFullYear() + (e.heure ? " à " + e.heure : "") + " · " + e.lieu));
+      // Icônes Facebook / Instagram / TikTok : seulement celles renseignées dans l'admin
+      let box = null;
+      RESEAUX.forEach(function (r) {
+        const href = lienReseau(e[r.cle], r);
+        if (!href) return;
+        if (!box) box = el("div", "actu-social actu-social--carte");
+        const a = el("a", "actu-social-link"); a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.setAttribute("aria-label", "Voir l'événement sur " + r.nom); a.title = r.nom;
+        const im = el("img"); im.src = r.img; im.alt = r.nom; im.loading = "lazy";
+        a.appendChild(im); box.appendChild(a);
+      });
+      if (box) info.appendChild(box);
       li.appendChild(badge); li.appendChild(info); liste.appendChild(li);
     });
 })();

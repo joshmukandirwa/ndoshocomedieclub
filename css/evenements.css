@@ -356,6 +356,7 @@ header {
     .nav-links {
         display: none;
     }
+
     .menu-btn {
         display: flex;
     }
@@ -901,9 +902,11 @@ header {
     .formulaire {
         flex-direction: row;
     }
+
     .formulaire input {
         flex: 1;
     }
+
     .formulaire button {
         flex-shrink: 0;
         padding: 16px 30px;
@@ -972,8 +975,15 @@ header {
 }
 
 @keyframes featured-in {
-    from { opacity: 0; transform: translateY(22px); }
-    to { opacity: 1; transform: none; }
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* Affiche : entière, jamais coupée */
@@ -1188,6 +1198,7 @@ header {
 }
 
 @media (min-width: 520px) {
+
     .featured-actions .btn-orange,
     .featured-actions .evnt-share-btn {
         flex: 0 1 auto;
@@ -1199,15 +1210,19 @@ header {
         grid-template-columns: 1fr 1.15fr;
         align-items: center;
     }
+
     .featured-poster {
         padding: 48px 20px 48px 44px;
     }
+
     .featured-poster picture {
         width: 100%;
     }
+
     .featured-body {
         padding: 48px 44px 48px 24px;
     }
+
     .poster-sticker {
         left: 24px;
         top: 34px;
@@ -1216,8 +1231,13 @@ header {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .featured-card { animation: none; }
-    .featured-poster picture { transition: none; }
+    .featured-card {
+        animation: none;
+    }
+
+    .featured-poster picture {
+        transition: none;
+    }
 }
 
 
@@ -1425,6 +1445,7 @@ header {
     section {
         padding: 56px 18px;
     }
+
     .hero {
         min-height: 78vh;
     }
@@ -1591,19 +1612,247 @@ header {
 }
 
 /* Événements créés dans l'admin */
-.evnt-more { margin-top: 56px; }
-.evnt-more[hidden] { display: none; }
-.evnt-more .evnt-cards-grid { max-width: 1100px; margin: 32px auto 0; }
+.evnt-more {
+    margin-top: 56px;
+}
+
+.evnt-more[hidden] {
+    display: none;
+}
+
+.evnt-more .evnt-cards-grid {
+    max-width: 1100px;
+    margin: 32px auto 0;
+}
 
 /* ---------- Carte à la une : version plus humaine (plus douce, plus aérée) ---------- */
-.featured-title .hl { text-shadow: none; }
-.featured-intro { font-size: 1.3rem; margin-bottom: 10px; }
-.featured-body p.featured-desc { font-size: 1.02rem; line-height: 1.7; margin-bottom: 22px; }
-.featured-mystery {
-    border-left: 0; border-radius: 14px; padding: 18px 18px 16px;
-    background: rgba(250, 243, 217, 0.06); border: 1px dashed rgba(250, 243, 217, 0.3);
+.featured-title .hl {
+    text-shadow: none;
 }
-.featured-mystery strong { text-transform: none; letter-spacing: 0; font-size: 1.05rem; color: #ffb020; margin-bottom: 8px; }
-.featured-mystery p { font-size: 0.98rem; line-height: 1.65; }
-.featured-resa-note { margin: -8px 0 16px; font-size: 0.92rem; line-height: 1.6; color: rgba(250, 243, 217, 0.78); }
-.featured-actions { gap: 10px; }
+
+.featured-intro {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.featured-body p.featured-desc {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.featured-mystery {
+    border-left: 0;
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    background: rgba(250, 243, 217, 0.06);
+    border: 1px dashed rgba(250, 243, 217, 0.3);
+}
+
+.featured-mystery strong {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1.05rem;
+    color: #ffb020;
+    margin-bottom: 8px;
+}
+
+.featured-mystery p {
+    font-size: 0.98rem;
+    line-height: 1.65;
+}
+
+.featured-resa-note {
+    margin: -8px 0 16px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: rgba(250, 243, 217, 0.78);
+}
+
+.featured-actions {
+    gap: 10px;
+}
+
+/* Événements : liens Facebook / Instagram / TikTok (seulement ceux renseignés dans l'admin) */
+.evnt-card-social {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: auto;
+    padding: 0 20px 18px;
+}
+
+.evnt-card-social+.evnt-card-foot {
+    margin-top: 0;
+}
+
+.evnt-social-titre {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+}
+
+.evnt-social {
+    display: flex;
+    gap: 8px;
+}
+
+.evnt-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid rgba(27, 58, 122, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.evnt-social-link img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+.evnt-social-link:hover,
+.evnt-social-link:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--orange);
+    outline: none;
+}
+
+
+/* ============================================================
+   Événements — rendu simplifié (moins chargé)
+   ============================================================ */
+.evnt-hero {
+    padding: 56px 20px;
+}
+
+.featured-card {
+    background: var(--navy-dark);
+    border-radius: 10px;
+    box-shadow: none;
+    animation: none;
+}
+
+.featured-card::before {
+    display: none;
+}
+
+.poster-sticker {
+    display: none;
+}
+
+.featured-poster {
+    padding: 28px 24px 0;
+}
+
+.featured-poster picture {
+    transform: none;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.6);
+}
+
+.featured-poster:hover picture {
+    transform: none;
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.6);
+}
+
+.featured-title .hl {
+    color: var(--cream);
+}
+
+.featured-title .ed {
+    letter-spacing: 1px;
+    font-weight: 600;
+    opacity: 0.75;
+}
+
+/* Compte à rebours : simple ligne de chiffres, sans cadres imbriqués */
+.countdown {
+    padding: 0;
+    background: none;
+    border: 0;
+    margin-bottom: 22px;
+}
+
+.countdown-label {
+    text-align: left;
+    color: rgba(250, 243, 217, 0.65);
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.countdown-grid {
+    gap: 6px;
+    max-width: 360px;
+}
+
+.countdown-grid div {
+    background: rgba(250, 243, 217, 0.08);
+    color: var(--cream);
+    border-radius: 6px;
+}
+
+.countdown-grid span {
+    color: rgba(250, 243, 217, 0.6);
+}
+
+.featured-intro {
+    color: var(--cream);
+    font-size: 1.15rem;
+}
+
+.featured-mystery {
+    border-left: 0;
+    border-radius: 0;
+    background: none;
+    padding: 14px 0 0;
+    border-top: 1px solid rgba(250, 243, 217, 0.15);
+}
+
+.featured-mystery strong {
+    color: var(--cream);
+}
+
+.featured-mystery b {
+    color: var(--orange);
+}
+
+.evnt-card {
+    border-radius: 8px;
+}
+
+.evnt-card:hover {
+    transform: none;
+}
+
+/* Affiche à la une : pleine largeur de la carte, sans marge ni arrondi */
+.featured-poster,
+.featured-poster:hover {
+    padding: 0;
+}
+
+.featured-poster picture,
+.featured-poster:hover picture {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+}
+
+@media (min-width: 900px) {
+    .featured-poster {
+        padding: 0;
+    }
+
+    .featured-poster picture {
+        width: 100%;
+    }
+}

@@ -1,0 +1,18 @@
+# Ndosho Comédie Club
+
+> Site officiel du Ndosho Comédie Club, collectif de jeunes humoristes de Goma (Nord-Kivu, RDC), créé le 20 juillet 2024.
+
+## À propos du site
+- Le site a été construit par Josué Mukandirwa, développeur web à Goma, chez EbenJosh Tech & Services.
+- Josué est un jeune développeur web de Goma. L'entrepreneuriat numérique l'attire et il aime créer des outils utiles : commerce, culture, divertissement, services. Son but : transformer une idée en un site que tout le monde peut utiliser.
+- Technologies du site : HTML, CSS, JavaScript, Firebase, Vercel.
+- Page du développeur : https://ndosho-comedie-club.vercel.app/developpeur.html
+- Contact du développeur : Joshmukandirwa@gmail.com, +243 995 876 855
+
+## Pages
+- Accueil : https://ndosho-comedie-club.vercel.app/
+- À propos : https://ndosho-comedie-club.vercel.app/apropos.html
+- Humoristes : https://ndosho-comedie-club.vercel.app/humoristes.html
+- Événements : https://ndosho-comedie-club.vercel.app/evenements.html
+- Actualités : https://ndosho-comedie-club.vercel.app/actualites.html
+- Contacts : https://ndosho-comedie-club.vercel.app/contacts.html

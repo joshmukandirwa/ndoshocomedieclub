@@ -350,6 +350,7 @@ header {
     .nav-links {
         display: none;
     }
+
     .menu-btn {
         display: flex;
     }
@@ -884,9 +885,11 @@ header {
     .formulaire {
         flex-direction: row;
     }
+
     .formulaire input {
         flex: 1;
     }
+
     .formulaire button {
         flex-shrink: 0;
         padding: 16px 30px;
@@ -981,6 +984,7 @@ header {
     .featured-card {
         grid-template-columns: 1fr 1.3fr;
     }
+
     .featured-img {
         height: 100%;
     }
@@ -1388,6 +1392,7 @@ header {
         opacity: 0;
         transform: translateY(6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1872,15 +1877,19 @@ header {
     .ticket-card {
         --side-w: 140px;
     }
+
     .ticket-title {
         font-size: clamp(0.85rem, 4vw, 1.1rem);
     }
+
     .ticket-boxes {
         grid-template-columns: 1fr;
     }
+
     .ticket-side {
         padding: 10px 6px;
     }
+
     .ticket-qr img {
         width: 108px;
         height: 108px;
@@ -1933,6 +1942,7 @@ header {
     section {
         padding: 56px 18px;
     }
+
     .hero {
         min-height: 78vh;
     }
@@ -2038,9 +2048,11 @@ header {
     0% {
         top: 12%;
     }
+
     50% {
         top: 88%;
     }
+
     100% {
         top: 12%;
     }
@@ -2108,6 +2120,7 @@ header {
         transform: scale(0.85);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
@@ -2119,19 +2132,23 @@ header {
 }
 
 @keyframes verifShake {
+
     10%,
     90% {
         transform: translateX(-2px);
     }
+
     20%,
     80% {
         transform: translateX(4px);
     }
+
     30%,
     50%,
     70% {
         transform: translateX(-8px);
     }
+
     40%,
     60% {
         transform: translateX(8px);
@@ -2286,10 +2303,36 @@ header {
         padding: 30px 16px 50px;
     }
 }
+
 /* Réservations pas encore ouvertes (message à la place du formulaire) */
-.resa-bientot { background: var(--cream, #faf3d9); padding: 56px 20px 64px; }
-.resa-bientot-box { max-width: 480px; margin: 0 auto; text-align: center; }
-.resa-bientot-box h2 { color: #14295c; margin-bottom: 14px; }
-.resa-bientot-box p { color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
-.resa-bientot-box .btn-orange { display: block; margin: 22px auto 0; max-width: 320px; }
-.resa-bientot-box .btn-outline-full { margin-top: 12px; }
+.resa-bientot {
+    background: var(--cream, #faf3d9);
+    padding: 56px 20px 64px;
+}
+
+.resa-bientot-box {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.resa-bientot-box h2 {
+    color: #14295c;
+    margin-bottom: 14px;
+}
+
+.resa-bientot-box p {
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.resa-bientot-box .btn-orange {
+    display: block;
+    margin: 22px auto 0;
+    max-width: 320px;
+}
+
+.resa-bientot-box .btn-outline-full {
+    margin-top: 12px;
+}
